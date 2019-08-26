@@ -1,0 +1,80 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.Prov_Disconn_Reconn_TC">
+				<methods>
+
+
+
+<!-- 
+					<include name="PR_4011" />
+					<include name="PR_3975" />
+					<include name="PR_3976" />
+					<include name="PR_3977" />
+					<include name="PR_3978" />
+					<include name="PR_3979" />
+					<include name="PR_3980" />
+					<include name="PR_4002" />
+
+					<include name="PR_3983" />
+					<include name="PR_3984" />
+					<include name="PR_3991" />
+					<include name="PR_3995" />
+					<include name="PR_3998" />
+
+					<include name="PR_3985" />
+					<include name="PR_3988" />
+					<include name="PR_3991" />
+					<include name="PR_3995" />
+					<include name="PR_3998" />
+
+					<include name="PR_3999" />
+					<include name="PR_4000" />
+					<include name="PR_4001" />
+					<include name="PR_4003" />
+					<include name="PR_4004" />
+					<include name="PR_4005" />
+					<include name="PR_4009" />
+					<include name="PR_4010" />
+					<include name="PR_4013" />
+					<include name="PR_4016" />
+					<include name="PR_4019" />
+					<include name="PR_4022" />
+
+ -->
+
+					<!-- <include name="PR_4014" />
+					<include name="PR_4015" />
+					<include name="PR_4016" />
+					<include name="PR_4017" />
+					<include name="PR_4018" />
+					<include name="PR_4019" />
+					<include name="PR_4020" />
+					<include name="PR_4021" />
+					<include name="PR_4022" />
+		 -->
+	
+
+					
+					
+					<include name="PR_3997" />
+					
+					<!-- 
+					<include name="PR_3978" />
+					<include name="PR_3979" />
+					<include name="PR_3980" />
+
+
+
+ -->
+
+
+
+
+
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

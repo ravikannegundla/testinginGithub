@@ -1,0 +1,20 @@
+<suite name="Provisioning TVCH Test suite" >
+  <test name="firefox">
+  <parameter name="browser" value="firefox"/>
+   <classes>
+  <class name="ProvisioningTC.Prov_Multi_Connections_TC">
+      <methods> 
+      
+      
+       
+        <include name="PR_4018"/> 
+       
+       
+       
+       
+        
+     </methods>
+   </class>  
+    </classes>
+  </test> 
+</suite>

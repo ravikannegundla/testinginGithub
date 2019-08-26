@@ -1,0 +1,53 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.ProvisioningAdaptersTC.Prov_SATLANTA_Tc">
+				<methods>
+
+
+
+
+
+
+
+
+
+	<include name="PR_3094" />
+	<include name="PR_3096" />
+	<include name="PR_3097" />
+	<include name="PR_3097" />
+	<include name="PR_3410" />
+	<include name="PR_3098" />
+	<include name="PR_3099" />
+	<include name="PR_3441" />
+	<include name="PR_3102" />
+	<include name="PR_3103" />
+
+
+	<include name="PR_3104" />
+	<include name="PR_3105" />
+	<include name="PR_3106" />
+	<include name="PR_3107" />
+	<include name="PR_3108" />
+	<include name="PR_3109" />
+	<include name="PR_3110" />
+	<include name="PR_3111" />
+	<include name="PR_3112" />
+
+
+
+	
+
+	
+	
+	
+	
+	             
+     </methods>
+   </class>  
+    </classes>
+  </test> 
+</suite>
+
+

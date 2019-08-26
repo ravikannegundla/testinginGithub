@@ -1,0 +1,44 @@
+<suite name="Provisioning TVCH Test suite" >
+  <test name="firefox">
+  <parameter name="browser" value="firefox"/>
+   <classes>
+  <class name="ProvisioningTC.Prov_Retracking_TC">
+      <methods>      
+      
+   
+ 
+	<!-- <include name="PR_4069"/> 
+	<include name="PR_4070"/>
+	<include name="PR_4071"/>
+	<include name="PR_4071"/>
+	<include name="PR_4072"/> -->
+	
+	 <!-- <include name="PR_4073"/>
+	<include name="PR_4074"/> -->
+	<!-- <include name="PR_4075"/>
+	<include name="PR_4076"/>
+	<include name="PR_4077"/>
+	<include name="PR_4078"/>
+	<include name="PR_4079"/>
+	<include name="PR_4080"/>
+	<include name="PR_4082"/>
+	<include name="PR_4083"/> 
+     <include name="PR_4465"/>   -->
+     
+     
+     
+     
+     <include name="PR_4465"/> 
+     
+   
+       
+     
+     
+     
+     </methods>
+   </class>  
+    </classes>
+  </test> 
+</suite>
+
+

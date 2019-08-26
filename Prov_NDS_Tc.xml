@@ -1,0 +1,64 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.ProvisioningAdaptersTC.Prov_NDS_Tc">
+				<methods>
+
+
+
+	<include name="PR_2269" />
+
+
+
+<!-- 
+
+	<include name="PR_2257" />
+	<include name="PR_2258" />
+	<include name="PR_2259" />
+	<include name="PR_2260" />
+	<include name="PR_2261" />
+	<include name="PR_2262" />
+	<include name="PR_2263" />
+	<include name="PR_2264" />
+	<include name="PR_2267" />
+	<include name="PR_3421" />
+	
+	
+	<include name="PR_2269" />
+	<include name="PR_2270" />
+	<include name="PR_2271" />
+	<include name="PR_2272" />
+	<include name="PR_2273" />
+	<include name="PR_2274" />
+	<include name="PR_2275" />
+	<include name="PR_2276" />
+	<include name="PR_2277" />
+	<include name="PR_4469" />
+	<include name="PR_4477" />
+	
+	
+	
+	
+	
+	
+	
+	
+ -->	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+                 
+     </methods>
+   </class>  
+    </classes>
+  </test> 
+</suite>
+

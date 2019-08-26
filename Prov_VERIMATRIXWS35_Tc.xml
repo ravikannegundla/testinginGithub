@@ -1,0 +1,42 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.ProvisioningAdaptersTC.Prov_VERIMATRIXWS35_Tc">
+				<methods>
+
+
+	
+	<include name="PR_1570" />
+	<include name="PR_1572" />
+	<include name="PR_1573" />
+	<include name="PR_3396" />
+	<include name="PR_1574" />
+	<include name="PR_1575" />
+	<include name="PR_3429" />
+	
+	<include name="PR_1576" />
+	<include name="PR_1577" />
+	<include name="PR_1578" />
+	<include name="PR_1579" />
+	<include name="PR_1580" />
+	<include name="PR_1581" />
+	
+	
+	<include name="PR_1582" />
+	<include name="PR_1583" />
+	<include name="PR_1584" />
+	<include name="PR_1585" />
+	<include name="PR_1586" />
+	<include name="PR_1587" />
+	
+	
+	
+	             
+     </methods>
+   </class>  
+    </classes>
+  </test> 
+</suite>
+
+

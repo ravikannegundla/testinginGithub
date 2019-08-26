@@ -1,0 +1,46 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.ProvisioningAdaptersTC.Prov_STREAMGUARD512_Tc">
+				<methods>
+
+
+
+
+	
+
+	<include name="PR_1389" />
+	<include name="PR_1390" />
+	<include name="PR_1391" />
+	<include name="PR_1392" />
+	<include name="PR_1393" />
+	<include name="PR_1394" />
+	<include name="PR_1395" />
+	<include name="PR_3424" />
+	
+	
+	<include name="PR_1397" />
+	<include name="PR_1398" />
+	<include name="PR_1399" />
+	<include name="PR_1400" />
+	<include name="PR_1401" />
+	<include name="PR_1402" />
+	<include name="PR_1403" />
+	<include name="PR_1404" />
+	<include name="PR_4494" />
+	
+	
+	
+	
+	
+	
+	
+	             
+     </methods>
+   </class>  
+    </classes>
+  </test> 
+</suite>
+
+

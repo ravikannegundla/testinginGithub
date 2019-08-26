@@ -1,0 +1,53 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.ProvisioningAdaptersTC.Prov_ABVV3811_Tc">
+				<methods>
+
+
+	<include name="PR_2734" />
+	<include name="PR_2735" /> 
+	<include name="PR_2736" />
+	<include name="PR_2737" /> 
+	<include name="PR_2738" />
+	<include name="PR_2739" /> 
+	<include name="PR_2740" />
+	<include name="PR_3391" />
+
+
+	<include name="PR_2741" />
+	<include name="PR_2742" />
+	<include name="PR_2743" />
+	<include name="PR_2744" />
+	<include name="PR_2745" />
+	<include name="PR_2746" />
+	<include name="PR_2747" />
+	<include name="PR_2748" />
+	<include name="PR_2749" />
+	
+	
+	<include name="PR_2750" />
+	<include name="PR_2751" />
+	<include name="PR_2752" />
+	<include name="PR_2753" />
+	<include name="PR_2754" />
+	<include name="PR_2755" />
+	<include name="PR_2756" />
+	<include name="PR_2757" />
+	<include name="PR_2758" />
+	<include name="PR_2759" />
+	<include name="PR_2760" />
+	<include name="PR_2761" />
+		
+	
+	
+	
+	
+	
+     </methods>
+   </class>  
+    </classes>
+  </test> 
+</suite>
+

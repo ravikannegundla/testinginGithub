@@ -1,0 +1,65 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.ProvisioningAdaptersTC.Prov_NAGRAVISION_Tc">
+				<methods>
+
+
+
+
+
+
+
+	
+	<include name="PR_3338" />
+	<include name="PR_3340" />
+	<include name="PR_3341" />
+	<include name="PR_3412" />
+	<include name="PR_3342" />
+	<include name="PR_3343" />
+	<include name="PR_3428" />
+	<include name="PR_3347" />
+	
+	
+	
+	<include name="PR_3348" />
+	<include name="PR_3349" />
+	<include name="PR_3350" />
+	<include name="PR_3351" />
+	<include name="PR_3352" />
+	<include name="PR_3353" />
+	<include name="PR_3354" />
+	<include name="PR_3355" />
+	<include name="PR_3356" />
+	
+	
+	<include name="PR_3357" />
+	<include name="PR_3358" />
+	<include name="PR_3359" />
+	<include name="PR_3360" />
+	<include name="PR_3361" />
+	<include name="PR_3362" />
+	<include name="PR_3363" />
+	<include name="PR_3364" />
+	<include name="PR_3365" />
+	<include name="PR_3366" />
+	<include name="PR_3367" />
+	<include name="PR_4472" />
+	
+	
+	
+	
+	
+
+	
+	
+	
+	             
+     </methods>
+   </class>  
+    </classes>
+  </test> 
+</suite>
+
+

@@ -1,0 +1,23 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.Prov_Collections_TC.Prov_Reactivate_TC">
+				<methods>
+
+
+
+
+
+ 
+	<include name="PR_4069" />
+	
+	
+		
+
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>
+

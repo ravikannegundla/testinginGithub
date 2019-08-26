@@ -1,0 +1,48 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.ProvisioningAdaptersTC.Prov_SAFEVIEW_Tc">
+				<methods>
+
+
+
+
+	
+	<include name="PR_2917" />
+	<include name="PR_2919" />
+	<include name="PR_2920" />
+	<include name="PR_3407" />
+	<include name="PR_2921" />
+	<include name="PR_2922" />
+	<include name="PR_3438" />
+	<include name="PR_2923" />
+	
+	
+	<include name="PR_2924" />
+	<include name="PR_2925" />
+	<include name="PR_2926" />
+	<include name="PR_2927" />
+	<include name="PR_2928" />
+	<include name="PR_2929" />
+	<include name="PR_2930" />
+	<include name="PR_2931" />
+	<include name="PR_2932" />
+	
+	
+	<include name="PR_2933" />
+	<include name="PR_2934" />
+	<include name="PR_2935" />
+	<include name="PR_2936" />
+	
+	
+	
+	
+	             
+     </methods>
+   </class>  
+    </classes>
+  </test> 
+</suite>
+
+

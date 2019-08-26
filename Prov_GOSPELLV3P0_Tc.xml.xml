@@ -1,0 +1,50 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.ProvisioningAdaptersTC.Prov_GOSPELLV3P0_Tc">
+				<methods>
+
+
+
+
+	<include name="PR_4332" />
+	<include name="PR_4333" />
+	<include name="PR_4334" />
+	<include name="PR_4335" />
+	<include name="PR_4336" />
+	<include name="PR_4337" />
+	<include name="PR_4338" />
+	
+	
+	<include name="PR_4357" />
+	<include name="PR_4358" />
+	<include name="PR_4359" />
+	<include name="PR_4360" />
+	<include name="PR_4361" />
+	<include name="PR_4362" />
+	<include name="PR_4363" />
+	<include name="PR_4364" />
+	<include name="PR_4365" />
+	<include name="PR_4366" />
+	<include name="PR_4367" />
+	<include name="PR_4368" />
+	<include name="PR_4369" />
+	
+
+
+
+
+
+
+		
+	
+	
+	             
+     </methods>
+   </class>  
+    </classes>
+  </test> 
+</suite>
+
+

@@ -1,0 +1,77 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.ProvisioningAdaptersTC.Prov_IRDETOWS_Tc">
+				<methods>
+
+
+	 <include name="PR_416" />
+	<include name="PR_418" />
+	<include name="PR_419" />
+	<include name="PR_3389" />
+	<include name="PR_420" />
+	<include name="PR_421" />
+	<include name="PR_3386" />
+	<include name="PR_4466" />
+	<include name="PR_422" />
+
+
+
+	<include name="PR_423" />
+	<include name="PR_424" />
+	<include name="PR_425" />
+	<include name="PR_426" />
+	<include name="PR_427" />
+	<include name="PR_428" />	
+	<include name="PR_429" />
+	<include name="PR_430" />
+	<include name="PR_431" />
+	
+	
+	<include name="PR_432" />
+	<include name="PR_433" />
+	<include name="PR_434" />	
+	<include name="PR_435" />
+	<include name="PR_436" />
+	<include name="PR_437" />
+	<include name="PR_438" />
+	<include name="PR_439" />
+	<include name="PR_440" />
+	<include name="PR_441" />
+	
+	
+	
+	
+	<include name="PR_442" />
+	<include name="PR_443" />
+	<include name="PR_444" />
+	<include name="PR_445" />
+	<include name="PR_446" />
+	<include name="PR_447" />
+ 	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	             
+     </methods>
+   </class>  
+    </classes>
+  </test> 
+</suite>
+
+

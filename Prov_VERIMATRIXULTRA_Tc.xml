@@ -1,0 +1,42 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.ProvisioningAdaptersTC.Prov_VERIMATRIXULTRA_Tc">
+				<methods>
+
+
+
+
+
+	
+	<include name="PR_2417" />
+	<include name="PR_2419" />
+	<include name="PR_2420" />
+	<include name="PR_2421" />
+	<include name="PR_2422" />
+	<include name="PR_794" />
+	<include name="PR_3428" />
+	
+	
+	<include name="PR_2423" />
+	<include name="PR_2424" />
+	<include name="PR_2425" />
+	<include name="PR_2426" />
+	<include name="PR_2427" />
+	<include name="PR_2428" />
+	<include name="PR_2429" />
+	<include name="PR_2430" />
+	
+	
+	
+	
+	
+	             
+     </methods>
+   </class>  
+    </classes>
+  </test> 
+</suite>
+
+

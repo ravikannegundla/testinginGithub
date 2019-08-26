@@ -1,0 +1,49 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.ProvisioningAdaptersTC.Prov_COLABLE_Tc">
+				<methods>
+
+
+
+
+
+	
+	
+	
+	<include name="PR_788" />
+	<include name="PR_789" />
+	<include name="PR_790" />
+	<include name="PR_791" />
+	<include name="PR_792" />
+	<include name="PR_793" />
+	<include name="PR_794" />
+	<include name="PR_3428" />
+	
+	
+	<include name="PR_795" />
+	<include name="PR_796" />
+	<include name="PR_797" />
+	<include name="PR_798" />
+	<include name="PR_799" />
+	<include name="PR_800" />
+	<include name="PR_801" />
+	
+	
+	
+	<include name="PR_802" />
+	<include name="PR_803" />
+	<include name="PR_804" />
+		
+
+
+	
+	             
+     </methods>
+   </class>  
+    </classes>
+  </test> 
+</suite>
+
+

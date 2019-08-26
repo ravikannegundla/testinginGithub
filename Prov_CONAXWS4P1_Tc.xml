@@ -1,0 +1,54 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.ProvisioningAdaptersTC.Prov_CONAXWS4P1_Tc">
+				<methods>
+
+
+
+
+	
+		<include name="PR_2534" />
+		<include name="PR_2536" />
+		<include name="PR_2537" />
+		<include name="PR_2538" />
+		<include name="PR_2539" />
+		<include name="PR_3428" />
+		<include name="PR_2542" />
+		
+		
+		
+		<include name="PR_2543" />
+		<include name="PR_2544" />
+		<include name="PR_2545" />
+		<include name="PR_2546" />
+		<include name="PR_2548" />
+		<include name="PR_2549" />
+		
+		
+		
+		
+		<include name="PR_2550" />
+		<include name="PR_2551" />
+		<include name="PR_2552" />
+		<include name="PR_2553" />
+		<include name="PR_2554" />
+		<include name="PR_2555" />
+		<include name="PR_2556" />
+		<include name="PR_2557" />
+		
+		
+		
+		
+	
+
+
+	             
+     </methods>
+   </class>  
+    </classes>
+  </test> 
+</suite>
+
+

@@ -1,0 +1,83 @@
+<suite name="Provisioning TVCH Test suite" >
+  <test name="firefox">
+  <parameter name="browser" value="firefox"/>
+   <classes>
+  <class name="ProvisioningTC.Prov_Orders_TC">
+      <methods> 
+      
+      
+           
+<!--       
+       <include name="PR_3774"/>
+       <include name="PR_3752"/>
+        <include name="PR_3757"/>
+ -->      
+       
+       <!-- <include name="PR_3753"/>
+       <include name="PR_3754"/>
+       <include name="PR_3756"/> -->
+       
+      
+        <!-- <include name="PR_3769"/>
+       <include name="PR_3770"/>
+        <include name="PR_3759"/>
+        <include name="PR_3760"/>
+        <include name="PR_3763"/>
+        
+       <include name="PR_3764"/>
+       
+        <include name="PR_3769"/>
+        <include name="PR_3773"/>
+	   <include name="PR_3776"/>
+	    <include name="PR_3770"/>
+	    <include name="PR_3772"/>
+	   
+	    <include name="PR_3778"/>
+	    <include name="PR_3781"/>
+       -->
+       
+       
+       
+       <!-- <include name="PR_3766"/> -->
+       <!-- <include name="PR_3767"/> -->   <!--Configuration related -->
+       <!-- <include name="PR_3768"/> -->   <!--Configuration related -->
+
+
+
+
+
+
+	   
+	
+	  
+	   
+	  <!--  <include name="PR_3762"/> -->
+	  <!--  <include name="PR_4478"/> -->
+	   
+	   
+	   
+   	    --><!-- <include name="PR_3777"/> -->   <!--Configuration related -->
+	   <!-- <include name="PR_3778"/> -->   <!--Configuration related -->
+	   <!-- <include name="PR_3781"/> -->
+	   <!-- <include name="PR_3782"/> -->
+	   <!-- <include name="PR_3788"/> -->    <!-- EXTRA PLAN ADDED -->
+	   <!-- <include name="PR_3789"/> -->
+
+
+
+
+		
+      
+       	<include name="PR_3758"/>
+        	
+	      
+       
+       
+       
+       
+        
+     </methods>
+   </class>  
+    </classes>
+  </test> 
+</suite>

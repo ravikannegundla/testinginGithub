@@ -1,0 +1,62 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.Prov_Renewal_TC">
+				<methods>
+
+					<!--
+					
+					 	<include name="PR_4052" /> 
+						<include name="PR_4490" /> 
+						<include name="PR_4048" /> 
+						<include name="PR_4049" /> 
+						<include name="PR_4051" /> 
+						<include name="PR_4053" /> 
+						<include name="PR_4054" /> 
+						<include name="PR_4055" /> 
+						<include name="PR_4056" /> 
+						<include name="PR_4058" /> 
+						<include name="PR_4063" />\
+						<include name="PR_4057" /> 
+						<include name="PR_4065" />
+						<include name="PR_4066" /> 
+						<include name="PR_4067" /> 
+						
+						-->
+
+
+
+
+				
+					<include name="PR_4064" />
+					
+					
+				
+					
+					
+					<!-- 
+					<include name="PR_4059" />
+					<include name="PR_4060" />
+					<include name="PR_4061" />
+					<include name="PR_4062" />
+
+
+
+
+ -->
+
+
+
+
+
+
+
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>
+
+
+

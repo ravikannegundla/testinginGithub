@@ -1,0 +1,81 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.ProvisioningAdaptersTC.Prov_NAGRACARDLESS_STB_Tc">
+				<methods>
+
+
+
+
+
+
+	
+	
+	<include name="PR_3237" />
+	<include name="PR_3239" />
+	<include name="PR_3240" />
+	<include name="PR_3241" />
+	<include name="PR_3411" />
+	<include name="PR_3242" />
+	<include name="PR_3243" />
+	
+	
+	<include name="PR_3246" />
+	<include name="PR_3247" />
+	<include name="PR_3248" />
+	<include name="PR_3249" />
+	<include name="PR_3250" />
+	<include name="PR_3251" />
+	<include name="PR_3252" />
+	<include name="PR_3253" />
+	<include name="PR_3254" />
+	<include name="PR_3255" />
+
+
+
+	<include name="PR_3256" />
+	<include name="PR_3257" />
+	<include name="PR_3258" />
+	<include name="PR_3259" />
+	<include name="PR_3260" />
+	<include name="PR_3261" />
+	<include name="PR_3262" />
+	<include name="PR_3263" />
+	<include name="PR_3264" />
+	<include name="PR_3265" />
+	<include name="PR_3266" />
+	
+	
+	<include name="PR_3267" />
+	<include name="PR_3268" />
+	<include name="PR_3269" />
+	<include name="PR_3270" />
+	<include name="PR_3271" />
+	<include name="PR_3272" />
+	<include name="PR_3273" />
+	<include name="PR_3274" />
+	<include name="PR_3275" />
+	
+			
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		
+	
+	
+	             
+     </methods>
+   </class>  
+    </classes>
+  </test> 
+</suite>
+
+

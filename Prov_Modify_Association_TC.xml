@@ -1,0 +1,46 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.Prov_Modify_Association_TC">
+				<methods>
+
+
+
+
+
+<!-- 
+					<include name="PR_4089" />
+					<include name="PR_4090" />
+					<include name="PR_4091" />
+					<include name="PR_4092" />
+					<include name="PR_4094" />
+					<include name="PR_4095" />
+					<include name="PR_4096" />
+					<include name="PR_4097" />
+					<include name="PR_4098" />
+					<include name="PR_4099" />
+					<include name="PR_4100" />
+					<include name="PR_4101" />
+					<include name="PR_4102" />
+					<include name="PR_4103" />
+					<include name="PR_4104" />
+					<include name="PR_4105" />
+					<include name="PR_4106" />
+
+ -->
+
+	 				<include name="PR_4102"/> 
+					
+ 
+
+
+
+
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>
+
+

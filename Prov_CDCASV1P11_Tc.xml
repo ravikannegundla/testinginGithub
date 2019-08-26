@@ -1,0 +1,60 @@
+<suite name="Provisioning TVCH Test suite">
+	<test name="firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="ProvisioningTC.ProvisioningAdaptersTC.Prov_CDCASV1P11_Tc">
+				<methods>
+
+
+
+	
+	
+	
+	<include name="PR_1658" />
+	<include name="PR_1659" />
+	<include name="PR_1660" />
+	<include name="PR_1661" />
+	<include name="PR_1662" />
+	<include name="PR_1663" />
+	<include name="PR_1664" />
+	<include name="PR_3392" />
+	
+	
+	<include name="PR_1665" />
+	<include name="PR_1666" />
+	<include name="PR_1667" />
+	<include name="PR_1668" />
+	<include name="PR_1669" />
+	
+	<include name="PR_1670" />
+	<include name="PR_1671" />
+	<include name="PR_1672" />
+	<include name="PR_1673" />
+	<include name="PR_1674" />
+	<include name="PR_1675" />
+	<include name="PR_1676" />
+	<include name="PR_1677" />
+	<include name="PR_1678" />
+	<include name="PR_1679" />
+	<include name="PR_1680" />
+	<include name="PR_1681" />
+	<include name="PR_1682" />
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	             
+     </methods>
+   </class>  
+    </classes>
+  </test> 
+</suite>
+
+
