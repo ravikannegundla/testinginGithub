@@ -116,7 +116,12 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 		String locPricingSaveBtn = "Save";
 
 		
+
 		String Prov_System_Name="ABVV3811";
+		String Prov_System_Code="ABVV3811";
+		String Eff_date="23-04-2019";
+		String Plan_code="ABVV3811" ;
+
 		
 		
 		protected Prov_ABVV3811_Tc(String sLogFileName) throws Exception 
@@ -168,16 +173,16 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 
 		// Basic Configuration
 
-		@Test(description="Define the provisioning system ")
+		@Test(description="Define the provisioning system")
 		public void PR_2734() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2734",this);
 				System.out.println("PR-2734 Started");
 				Thread.sleep(2000);
-
+				relogin();
+				Thread.sleep(2000);
 				oNavigate.toProvisioningSystem();
 				Thread.sleep(2000);
 				Screen_Validation=oProvisioningSystemCreation.ProvisioningSystem(Prov_System_Name,Prov_System_Name,"", "", "", "", "", "", "","GMT+05:30", "", "", "", "", "","Save") ;
@@ -186,13 +191,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2734 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes(" Customer is Actvated with out hardware  ");
+					testLinkConnection.setsNotes("Define the provisioning system is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2734 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Status is not active and success message is not displaying");
+					testLinkConnection.setsNotes("Define the provisioning system is Failed");
 				}
 			}
 			catch(Exception e)
@@ -214,7 +219,8 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				testLinkConnection.setsTestCase("PR-2735",this);
 				System.out.println("PR-2735 Started");
 				Thread.sleep(2000);
-
+				relogin();
+				Thread.sleep(2000);
 				oNavigate.toHardwareForProvisioning();
 				Thread.sleep(2000);
 				Screen_Validation=oHardwareForProvisioning.HardwareMappingForProvisioningSystem(Prov_System_Name,Item1,Item2,"Save");
@@ -223,13 +229,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2735 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes(" Customer is Actvated with out hardware  ");
+					testLinkConnection.setsNotes("Hardware For provisioning is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2735 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Status is not active and success message is not displaying");
+					testLinkConnection.setsNotes("Hardware For provisioning is Failed");
 				}
 			}
 			catch(Exception e)
@@ -241,15 +247,17 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			}
 		}
 
+		
 
-		@Test(description="Basic Service definition ")
+		@Test(description="Basic Service definition")
 		public void PR_2736() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2736",this);
 				System.out.println("PR-2736 Started");
+				Thread.sleep(2000);
+				relogin();
 				Thread.sleep(2000);
 				oNavigate.toBasicServices();
 				Thread.sleep(2000);
@@ -259,13 +267,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2736 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes(" Basic Service definition creation is done");
+					testLinkConnection.setsNotes("Basic Service definition is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2736 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Basic Service definition is not Created");
+					testLinkConnection.setsNotes("Basic Service definition is Failed");
 				}
 			}
 			catch(Exception e)
@@ -278,35 +286,52 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 		}
 
 
+		
 		@Test(description="Service Group definition")
 		public void PR_2737() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2737",this);
 				System.out.println("PR-2737 Started");
 				Thread.sleep(2000);
-
-				oNavigate.toServiceGroup();
-				Thread.sleep(5000);
-				oServiceGroup.ServiceGroup_Creation(1,Prov_System_Name,Prov_System_Name,Service_Class,"Add","Save");
-
-				String Screen_Validation=driver.findElement(ValidationMessage).getText();
+				relogin();
 				Thread.sleep(2000);
-				System.out.println(Screen_Validation);
+				String GroupIdCountValue = "select COUNT(GROUP_ID) AS COUNT from SERVICE_GROUP  where GROUP_CODE='"+Prov_System_Name+"' or GROUP_NAME='"+Prov_System_Name+"'";
+				this.records=oDBConnection.fecthRecords(GroupIdCountValue);
+				this.record=this.records.get(0);
+				String GroupIdCount=record.get("COUNT");
+				System.out.println("Group Id Count is "+GroupIdCount);
+				int GroupId_Count = Integer.parseInt(GroupIdCount);
+				System.out.println("Group Id Count is "+GroupId_Count);
 
-				if(Screen_Validation.contains("Service Group has been added successfully"))
+				// if the  Group id  is not exist's in db then the New Service  will be created.
+				if(GroupId_Count==0)  
+				{
+					oNavigate.toServiceGroup();
+					Thread.sleep(5000);
+					oServiceGroup.ServiceGroup_Creation(1,Prov_System_Name,Prov_System_Name,Service_Class,"Add","Save");
+					Screen_Validation=driver.findElement(ValidationMessage).getText();
+					Thread.sleep(2000);
+					System.out.println(Screen_Validation);
+				}
+				else 
+				{
+					System.out.println("Group id already exists");
+					Screen_Validation="Group id already exists";
+				}
+				
+				if(Screen_Validation.length()!=0)
 				{
 					System.out.println("PR-2737 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes(" Customer is Actvated with out hardware  ");
+					testLinkConnection.setsNotes("Service Group definition is passed");
 				}
 				else
 				{
 					System.out.println("PR-2737 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Status is not active and success message is not displaying");
+					testLinkConnection.setsNotes("Service Group definition is Failed");
 				}
 			}
 			catch(Exception e)
@@ -318,6 +343,7 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			}
 		}
 
+		
 
 		@Test(description="Bundle definition")
 		public void PR_2738() throws Exception
@@ -327,21 +353,43 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				testLinkConnection.setsTestCase("PR-2738",this);
 				System.out.println("PR-2738 Started");
 				Thread.sleep(2000);
-				oNavigate.toBundle();
-				Thread.sleep(3000);
+				relogin();
+				Thread.sleep(2000);
+				String BundleCountValue = "select COUNT(BUNDLE_ID) AS COUNT from bundle where BUNDLE_NAME='"+Prov_System_Name+"' or BUNDLE_CODE='"+Prov_System_Name+"'";
+				this.records=oDBConnection.fecthRecords(BundleCountValue);
+				this.record=this.records.get(0);
+				String BundleCount=record.get("COUNT");
+				System.out.println("Group Id Count is "+BundleCount);
+				int Bundle_Count = Integer.parseInt(BundleCount);
+				System.out.println("Group Id Count is "+Bundle_Count);
 
-				String msg=oBundle.Bundle_Creation(Prov_System_Name,Prov_System_Name,"General",Service_Class,"Active",1,"Add","Service",Prov_System_Name,"","","","Save");
-				if(msg.equalsIgnoreCase("Bundle has been added successfully"))
+				// if the  Bundle  is not exist's in db then the New Service  will be created.
+				if(Bundle_Count==0)  
+				{
+					oNavigate.toBundle();
+					Thread.sleep(3000);
+					Screen_Validation=oBundle.Bundle_Creation(Prov_System_Name,Prov_System_Name,"General",Service_Class,"Active",1,"Add","Service",Prov_System_Name,"","","","Save");
+					Thread.sleep(2000);
+					System.out.println(Screen_Validation);
+				}
+
+				else 
+				{
+					System.out.println("Bundle already exists");
+					Screen_Validation="Bundle already exists";
+				}
+				
+				if(Screen_Validation.length()!=0)
 				{
 					System.out.println("PR-2738 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes(" Customer is Actvated with out hardware  ");
+					testLinkConnection.setsNotes("Bundle definition is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2738 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Status is not active and success message is not displaying");
+					testLinkConnection.setsNotes("Bundle definition is Failed");
 				}
 			}
 			catch(Exception e)
@@ -353,34 +401,54 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			}
 		}
 
+		
 
 		@Test(description="Price plan definition")
 		public void PR_2739() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2739",this);
 				System.out.println("PR-2739 Started");
 				Thread.sleep(2000);
-				oNavigate.toPricePlan();
-				Thread.sleep(1000);
+				relogin();
+				String PricePlanCountValue = "select COUNT(PLAN_ID) AS COUNT from priceplan where PLAN_CODE='"+Plan_code+"' or PLAN_DESC='"+Plan_code+"'";
+				this.records=oDBConnection.fecthRecords(PricePlanCountValue);
+				this.record=this.records.get(0);
+				String PricePlanCount=record.get("COUNT");
+				System.out.println("Group Id Count is "+PricePlanCount);
+				int PricePlan_Count = Integer.parseInt(PricePlanCount);
+				System.out.println("Group Id Count is "+PricePlan_Count);
 
-				oPricePlan.PricePlanCreation(chargeUnit,Prov_System_Name,Prov_System_Name,"",Prov_System_Name,"","","","",locPlanType,"One Month"," "," ","",""," ","","Basic",""," "," ","","",locSaveOrCancelBtn,locpricingBtn,"17-04-2019",locPrice,locPricingSaveBtn);
-				String msg=driver.findElement(ScreenOutPut).getText();
-				Thread.sleep(5000);
-				System.out.println("msg is"+msg);
-				if(msg.contains("Pricing details have been added successfully"))
+				// if the  Price plan  is not exist's in db then the New Service  will be created.
+				if(PricePlan_Count==0)  
+				{
+					Thread.sleep(2000);
+					oNavigate.toPricePlan();
+					Thread.sleep(1000);
+					oPricePlan.PricePlanCreation(chargeUnit,Plan_code,Plan_code,"",Prov_System_Name,"","","","",locPlanType,"One Month"," "," ","",""," ","","Basic",""," "," ","","",locSaveOrCancelBtn,locpricingBtn,Eff_date,locPrice,locPricingSaveBtn);
+					Screen_Validation=driver.findElement(ScreenOutPut).getText();
+					Thread.sleep(5000);
+					System.out.println(Screen_Validation);
+				}
+
+				else 
+				{
+					System.out.println("Price Plan  already exists");
+					Screen_Validation="Price Plan already exists";
+				}
+				
+				if(Screen_Validation.length()!=0)
 				{
 					System.out.println("PR-2739 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes(" Customer is Actvated with out hardware  ");
+					testLinkConnection.setsNotes("Price plan definition is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2739 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Status is not active and success message is not displaying");
+					testLinkConnection.setsNotes("Price plan definition is Failed");
 				}
 			}
 			catch(Exception e)
@@ -392,17 +460,18 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			}
 		}
 
+		
 
-		@Test(description="Activity Prerequisites ")
+		@Test(description="Activity Prerequisites")
 		public void PR_2740() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2740",this);
 				System.out.println("PR-2740 Started");
 				Thread.sleep(2000);
-
+				relogin();
+				Thread.sleep(2000);
 				Actionids_List = new ArrayList(10);
 				Actionids_List.add("1");
 				Actionids_List.add("16");
@@ -417,6 +486,9 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				Screen_Validation=oProvisioningSystemAction.ProvisioningActionMapping(Prov_System_Name,Actionids_List,"Save");
 				System.out.println("validation message"+Screen_Validation);
 
+				relogin();
+				Thread.sleep(2000);
+				
 				oNavigate.toActivityPrerequisites();
 				Thread.sleep(2000);
 				oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"1","12","Pre Action","N",1);
@@ -424,25 +496,22 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"1","13","Pre Action","N",3);
 				oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"16","87","Post Action","N",4);
 
-
 				driver.findElement(btnsave).click();
 				String Screen_Validation1=driver.findElement(ValidationMessage).getText();
 				Thread.sleep(2000);
 				System.out.println(Screen_Validation1);
 
-
-
 				if(Screen_Validation1.length()!=0  && Screen_Validation.length()!=0 )
 				{
 					System.out.println("PR-2740 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes(" Customer is Actvated with out hardware  ");
+					testLinkConnection.setsNotes("Activity Prerequisites is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2740 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Status is not active and success message is not displaying");
+					testLinkConnection.setsNotes("Activity Prerequisites is Failed");
 				}
 			}
 			catch(Exception e)
@@ -455,6 +524,7 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 		}
 
 
+		
 		@Test(description="Provision Service Definition")
 		public void PR_3391() throws Exception
 		{
@@ -464,6 +534,8 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				testLinkConnection.setsTestCase("PR-3391",this);
 				System.out.println("PR-3391 Started");
 				Thread.sleep(2000);
+				relogin();
+				Thread.sleep(2000);
 				oNavigate.toProvisioningService();
 				Thread.sleep(2000);
 				Screen_Validation=oProvisioningService.ProvisioningServiceMapping(Prov_System_Name,"SERVICE",Prov_System_Name,"Save");
@@ -472,13 +544,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-3391 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes(" Customer is Actvated with out hardware  ");
+					testLinkConnection.setsNotes("Provision Service Definition is Passed");
 				}
 				else
 				{
 					System.out.println("PR-3391 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Status is not active and success message is not displaying");
+					testLinkConnection.setsNotes("Provision Service Definition is Failed");
 				}
 			}
 			catch(Exception e)
@@ -525,13 +597,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2741 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes(" Customer activation is done  ");
+					testLinkConnection.setsNotes("Customer activation is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2741 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Customer activation is pending ");
+					testLinkConnection.setsNotes("Customer activation is Failed");
 				}
 			}
 			catch(Exception e)
@@ -544,7 +616,8 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 		}
 
 
-		@Test(description="Disconnection ")
+		
+		@Test(description="Disconnection")
 		public void PR_2742() throws Exception
 		{
 
@@ -578,13 +651,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2742 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes(" Disconnection is Done");
+					testLinkConnection.setsNotes("Disconnection is passed");
 				}
 				else
 				{
 					System.out.println("PR-2742 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Disconnection Is Pending");
+					testLinkConnection.setsNotes("Disconnection Is failed");
 				}
 			}
 			catch(Exception e)
@@ -596,6 +669,7 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			}
 		}
 
+		
 
 		@Test(description="Reconnection")
 		public void PR_2743() throws Exception
@@ -639,13 +713,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2743 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Reconnection Is Done");
+					testLinkConnection.setsNotes("Reconnection Is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2743 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Reconnection is In Pending");
+					testLinkConnection.setsNotes("Reconnection is Failed");
 				}
 			}
 			catch(Exception e)
@@ -657,11 +731,11 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			}
 		}
 
+		
 
-		@Test(description="Suspend ")
+		@Test(description="Suspend")
 		public void PR_2744() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2744",this);
@@ -692,13 +766,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2744 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Suspend Is Done");
+					testLinkConnection.setsNotes("Suspend Is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2744 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Suspend Is in Pending");
+					testLinkConnection.setsNotes("Suspend Is Failed");
 				}
 			}
 			catch(Exception e)
@@ -710,11 +784,11 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			}
 		}
 
+		
 
 		@Test(description="Reactivate")
 		public void PR_2745() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2745",this);
@@ -749,13 +823,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2745 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Reactivate Is Done");
+					testLinkConnection.setsNotes("Reactivate Is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2745 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Reactivate Is In Pending");
+					testLinkConnection.setsNotes("Reactivate Is Failed");
 				}
 			}
 			catch(Exception e)
@@ -767,11 +841,11 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			}
 		}
 
+		
 
 		@Test(description="Retracking")
 		public void PR_2746() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2746",this);
@@ -798,13 +872,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2746 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Retracking Is Done");
+					testLinkConnection.setsNotes("Retracking Is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2746 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Retracking Is In Pending");
+					testLinkConnection.setsNotes("Retracking Is failed");
 				}
 			}
 			catch(Exception e)
@@ -816,11 +890,11 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			}
 		}
 
+		
 
 		@Test(description="Retracking with uniqueid")
 		public void PR_2747() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2747",this);
@@ -865,11 +939,11 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			}
 		}
 
+		
 
 		@Test(description="Hardware change")
 		public void PR_2748() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2748",this);
@@ -907,13 +981,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2748 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Hardware change Is Done");
+					testLinkConnection.setsNotes("Retracking with uniqueid is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2748 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Hardware change Is In Pending");
+					testLinkConnection.setsNotes("Retracking with uniqueid is failed");
 				}
 			}
 			catch(Exception e)
@@ -926,10 +1000,10 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 		}
 
 
+		
 		@Test(description="Renewal")
 		public void PR_2749() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2749",this);
@@ -965,13 +1039,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2749 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Renewal Is Done");
+					testLinkConnection.setsNotes("Renewal is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2749 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Renewal Is In Pending");
+					testLinkConnection.setsNotes("Renewal Is failed");
 				}
 			}
 			catch(Exception e)
@@ -990,7 +1064,6 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 		@Test(description="Provisioning system action- PRODUCTLIST actions")
 		public void PR_2750() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2750",this);
@@ -1029,7 +1102,7 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2740 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Provisioning system action- PRODUCTLIST actions Mapping Is Done");
+					testLinkConnection.setsNotes("Provisioning system action- PRODUCTLIST actions Mapping Is Passed");
 				}
 				else
 				{
@@ -1047,11 +1120,11 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			}
 		}
 
+		
 
 		@Test(description="Customer activation with ACTIVATEPRODUCTLIST action")
 		public void PR_2751() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2751",this);
@@ -1075,13 +1148,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2751 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Customer activation with ACTIVATEPRODUCTLIST action Is Done");
+					testLinkConnection.setsNotes("Customer activation with ACTIVATEPRODUCTLIST action is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2751 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Customer activation with ACTIVATEPRODUCTLIST action Is In Pending");
+					testLinkConnection.setsNotes("Customer activation with ACTIVATEPRODUCTLIST action is Failed");
 				}
 			}
 			catch(Exception e)
@@ -1093,6 +1166,7 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			}
 		}
 
+		
 		
 		@Test(description="Disconnection with DISCONNECTPRODUCTS action")
 		public void PR_2752() throws Exception
@@ -1130,13 +1204,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2752 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Disconnection with DISCONNECTPRODUCTS action Is Done");
+					testLinkConnection.setsNotes("Disconnection with DISCONNECTPRODUCTS action is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2752 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Disconnection with DISCONNECTPRODUCTS action Is In Pending");
+					testLinkConnection.setsNotes("Disconnection with DISCONNECTPRODUCTS action is Failed");
 				}
 			}
 			catch(Exception e)
@@ -1148,11 +1222,11 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			}
 		}
 
+		
 
 		@Test(description="Reconnection – ACTIVATEPRODUCTLIST")
 		public void PR_2753() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2753",this);
@@ -1194,13 +1268,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2753 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Reconnection – ACTIVATEPRODUCTLIST Is Done");
+					testLinkConnection.setsNotes("Reconnection – ACTIVATEPRODUCTLIST Is passed");
 				}
 				else
 				{
 					System.out.println("PR-2753 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Reconnection – ACTIVATEPRODUCTLIST Is In Pending");
+					testLinkConnection.setsNotes("Reconnection – ACTIVATEPRODUCTLIST Is failed");
 				}
 			}
 			catch(Exception e)
@@ -1212,11 +1286,11 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			}
 		}
 
+		
 
 		@Test(description="Suspend agreement with SUSPENDPRODUCTLIST action")
 		public void PR_2754() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2754",this);
@@ -1245,13 +1319,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				if(Qstatus.equalsIgnoreCase(C_Status))        	{
 					System.out.println("PR-2754 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Suspend agreement with SUSPENDPRODUCTLIST action Is Done");
+					testLinkConnection.setsNotes("Suspend agreement with SUSPENDPRODUCTLIST action is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2754 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Suspend agreement with SUSPENDPRODUCTLIST action Is In Pending");
+					testLinkConnection.setsNotes("Suspend agreement with SUSPENDPRODUCTLIST action is failed");
 				}
 			}
 			catch(Exception e)
@@ -1263,11 +1337,11 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			}
 		}
 
+		
 
 		@Test(description="Reactivate agreement with REACTIVATEPRODUCTLIST action")
 		public void PR_2755() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2755",this);
@@ -1303,13 +1377,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2755 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Reactivate agreement with REACTIVATEPRODUCTLIST action Is Done");
+					testLinkConnection.setsNotes("Reactivate agreement with REACTIVATEPRODUCTLIST action is Passsed");
 				}
 				else
 				{
 					System.out.println("PR-2755 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Reactivate agreement with REACTIVATEPRODUCTLIST action Is In Pending");
+					testLinkConnection.setsNotes("Reactivate agreement with REACTIVATEPRODUCTLIST action is failed");
 				}
 			}
 			catch(Exception e)
@@ -1322,10 +1396,10 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 		}
 
 
+		
 		@Test(description="Retracking with RETRACKPRODUCTLIST action")
 		public void PR_2756() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2756",this);
@@ -1351,13 +1425,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2756 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Retracking with RETRACKPRODUCTLIST action Is Done");
+					testLinkConnection.setsNotes("Retracking with RETRACKPRODUCTLIST action is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2756 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Retracking with RETRACKPRODUCTLIST action Is In Pending");
+					testLinkConnection.setsNotes("Retracking with RETRACKPRODUCTLIST action is Failed");
 				}
 			}
 			catch(Exception e)
@@ -1369,11 +1443,11 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			}
 		}
 
+		
 
 		@Test(description="Retrack with INITIALISE- RETRACKPRODUCTLIST action")
 		public void PR_2757() throws Exception
 		{
-
 			try
 			{
 				testLinkConnection.setsTestCase("PR-2757",this);
@@ -1400,13 +1474,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2757 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Retrack with INITIALISE- RETRACKPRODUCTLIST action Is Done");
+					testLinkConnection.setsNotes("Retrack with INITIALISE- RETRACKPRODUCTLIST action is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2757 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Retrack with INITIALISE- RETRACKPRODUCTLIST action Is In Pending");
+					testLinkConnection.setsNotes("Retrack with INITIALISE- RETRACKPRODUCTLIST action is Failed");
 				}
 			}
 			catch(Exception e)
@@ -1419,6 +1493,7 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 		}
 
 
+		
 		@Test(description="Provisioning system action- list all actions")
 		public void PR_2758() throws Exception
 		{
@@ -1461,13 +1536,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2758 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Provisioning system action- list all actions Mapping Is Done");
+					testLinkConnection.setsNotes("Provisioning system action- list all actions is passed");
 				}
 				else
 				{
 					System.out.println("PR-2758 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Provisioning system action- list all actions Mapping Is Failed");
+					testLinkConnection.setsNotes("Provisioning system action- list all actions Is Failed");
 				}
 
 			}
@@ -1480,6 +1555,7 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			}
 		}
 
+		
 
 		@Test(description="Suspend Agreement with suspend all")
 		public void PR_2759() throws Exception
@@ -1489,6 +1565,8 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 			{
 				testLinkConnection.setsTestCase("PR-2759",this);
 				System.out.println("PR-2759 Started");
+				Thread.sleep(2000);
+				relogin();
 				Thread.sleep(2000);
 				CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
 				ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
@@ -1513,13 +1591,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				if(Qstatus.equalsIgnoreCase(C_Status))        	{
 					System.out.println("PR-2759 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Suspend Agreement with suspend all Is Done");
+					testLinkConnection.setsNotes("Suspend Agreement with suspend all Is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2759 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Suspend Agreement with suspend all Is In Pending");
+					testLinkConnection.setsNotes("Suspend Agreement with suspend all Is Failed");
 				}
 			}
 			catch(Exception e)
@@ -1532,6 +1610,7 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 		}
 
 
+		
 		@Test(description="Reactivate Agreement with Reactivate all")
 		public void PR_2760() throws Exception
 		{
@@ -1572,13 +1651,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				{
 					System.out.println("PR-2760 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Reactivate Agreement with Reactivate all Is Done");
+					testLinkConnection.setsNotes("Reactivate Agreement with Reactivate all is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2760 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Reactivate Agreement with Reactivate all Is In Pending");
+					testLinkConnection.setsNotes("Reactivate Agreement with Reactivate all is failed");
 				}
 			}
 			catch(Exception e)
@@ -1591,6 +1670,7 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 		}
 
 
+		
 		@Test(description="Hardware Change with Hardware change single request action")
 		public void PR_2761() throws Exception
 		{
@@ -1606,7 +1686,6 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				Actionids_List.add("2");
 				Actionids_List.add("30");
 				System.out.println("array list is "+Actionids_List);
-
 
 				oNavigate.toProvisioningSystemAction();
 				Thread.sleep(2000);
@@ -1644,13 +1723,13 @@ public class Prov_ABVV3811_Tc extends MQProvisioning
 				if(Qstatus.equalsIgnoreCase(C_Status))        	{
 					System.out.println("PR-2761 Pass");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-					testLinkConnection.setsNotes("Hardware Change with Hardware change single request action Is Done");
+					testLinkConnection.setsNotes("Hardware Change with Hardware change single request action Is Passed");
 				}
 				else
 				{
 					System.out.println("PR-2761 Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Hardware Change with Hardware change single request action Is In Pending");
+					testLinkConnection.setsNotes("Hardware Change with Hardware change single request action Is failed");
 				}
 			}
 			catch(Exception e)

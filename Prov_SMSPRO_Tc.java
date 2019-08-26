@@ -3,11 +3,16 @@ package ProvisioningTC.ProvisioningAdaptersTC;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import mq.seleniumFW.connection.MQDBConnection;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
 
+import testlink.api.java.client.TestLinkAPIResults;
+
+import com.BasicConfigurationsOfServiceOrder.OrderManagementPrivileges;
 import com.InventoryAndLogisticsPageObject.HardwareReplacement;
 import com.OrderManagementPageObject.Disconnection;
 import com.OrderManagementPageObject.Reconnection;
@@ -28,12 +33,11 @@ import com.ReceivablesPageObject.Collections;
 import TestFrameWork.MQProvisioning;
 import Utility.Navigate;
 import Utility.WaitTool;
-import mq.seleniumFW.connection.MQDBConnection;
-import testlink.api.java.client.TestLinkAPIResults;
 
-public class Prov_NAGRAVISION_Tc extends MQProvisioning
+public class Prov_SMSPRO_Tc  extends MQProvisioning
 
 {
+
 
 			WebDriver driver;
 			Navigate oNavigate;
@@ -56,6 +60,8 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 			ProvisioningService oProvisioningService;
 			ProvisioningSystemAction oProvisioningSystemAction;
 			ActivityPrerequisites oActivityPrerequisites;
+			OrderManagementPrivileges oOrderManagementPrivileges;
+
 
 			public By ScreenOutPut =By.xpath(".//*[@id='ctl00__infoSpan']");
 			public By locContractNumber = By.xpath(".//*[@id='ctl00_uxPgCPH_txtcontractno']");
@@ -92,7 +98,7 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 			public String Service_Class="TV Channel";
 			public String packageable="packageable";
 			public String  Requires_Activation="Requires_Activation";
-			public String btn="Save";
+			public String 	btn="Save";
 			public String Basic_Service_status="Active",Screen_Validation;
 			String chargeUnit = "One Month";
 			String locPlanType = "Perpetual";
@@ -101,15 +107,13 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 			String locPrice = "100";
 			String locPricingSaveBtn = "Save";
 
-			String getRequestCount,Request_Count;
-			int RequestCount;
 
-			String Prov_System_Name="NAGRA";
-			String Prov_System_Code="NAGRA";
-			String Eff_date="24-04-2019";
-			String Plan_code="NAGRA" ;
+			String Prov_System_Name="SMSPRO";
+			String Prov_System_Code="SMSPRO";
+			String Eff_date="06-08-2019";
+			String Plan_code="SMSPRO" ;
 
-			protected Prov_NAGRAVISION_Tc(String sLogFileName) throws Exception 
+			protected Prov_SMSPRO_Tc(String sLogFileName) throws Exception 
 			{
 				super(sLogFileName);
 				this.oDBConnection=dbConnection;
@@ -140,6 +144,15 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 				this.oProvisioningService= new ProvisioningService(driver,dbConnection);
 				this.oProvisioningSystemAction= new ProvisioningSystemAction(driver,dbConnection);
 				this.oActivityPrerequisites= new ActivityPrerequisites(driver,dbConnection);
+				
+				
+				/*
+				oBasicConfigurationsOfProvisioning.OwnHardware_Privileges(); 
+				oOrderManagementPrivileges.Disconnection_privileges();
+				oOrderManagementPrivileges.Reconnection_privileges();
+				oOrderManagementPrivileges.ServiceOrder_privileges();
+				 */
+				
 				testLinkConnection.setsTestProject("PayTV Provisioning");
 				testLinkConnection.setsTestPlan("5.12");
 				testLinkConnection.setsBuild("512");
@@ -156,7 +169,7 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 			{
 				oNavigate.Navigation_Action("Logout");
 				oWaitTool.implicitWait(10);		
-				verifyLogin("KRAVI","KRAVI123");
+				verifyLogin("SYSADMIN","SYSADMIN");
 				oWaitTool.implicitWait(10);
 			}
 
@@ -164,12 +177,12 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 
 			// Basic Configuration
 			@Test(description="Define the provisioning system")
-			public void PR_3338() throws Exception
+			public void PR_2655() throws Exception
 			{
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3338",this);
-					System.out.println("PR-3338 Started");
+					testLinkConnection.setsTestCase("PR-2655",this);
+					System.out.println("PR-2655 Started");
 					Thread.sleep(2000);
 					relogin();
 					oNavigate.toProvisioningSystem();
@@ -178,21 +191,21 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					System.out.println("validation message"+Screen_Validation);
 					if(Screen_Validation.length()!=0)
 					{
-						System.out.println("PR-3338 Pass");
+						System.out.println("PR-2655 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
 						testLinkConnection.setsNotes("Define the provisioning system is Passed");
 					}
 					else
 					{
-						System.out.println("PR-3338 Failed");
+						System.out.println("PR-2655 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Define the provisioning system is failed");
+						testLinkConnection.setsNotes("Define the provisioning system is Failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3338",driver);
-					System.out.println("Test__PR-3338___%Failed");
+					captureScreenShot.takeScreenShot("PR-2655",driver);
+					System.out.println("Test__PR-2655___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
@@ -201,12 +214,12 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 
 
 			@Test(description="Hardware For provisioning")
-			public void PR_3340() throws Exception
+			public void PR_2656() throws Exception
 			{
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3340",this);
-					System.out.println("PR-3340 Started");
+					testLinkConnection.setsTestCase("PR-2656",this);
+					System.out.println("PR-2656 Started");
 					Thread.sleep(2000);
 					relogin();
 					oNavigate.toHardwareForProvisioning();
@@ -215,35 +228,35 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					System.out.println("validation message"+Screen_Validation);
 					if(Screen_Validation.length()!=0)
 					{
-						System.out.println("PR-3340 Pass");
+						System.out.println("PR-2656 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
 						testLinkConnection.setsNotes("Hardware For provisioning is Passed");
 					}
 					else
 					{
-						System.out.println("PR-3340 Failed");
+						System.out.println("PR-2656 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 						testLinkConnection.setsNotes("Hardware For provisioning is Failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3340",driver);
-					System.out.println("Test__PR-3340___%Failed");
+					captureScreenShot.takeScreenShot("PR-2656",driver);
+					System.out.println("Test__PR-2656___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
 			}
 
-			
+
 
 			@Test(description="Basic Service definition")
-			public void PR_3341() throws Exception
+			public void PR_2657() throws Exception
 			{
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3341",this);
-					System.out.println("PR-3341 Started");
+					testLinkConnection.setsTestCase("PR-2657",this);
+					System.out.println("PR-2657 Started");
 					Thread.sleep(2000);
 					relogin();
 					oNavigate.toBasicServices();
@@ -252,38 +265,37 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					System.out.println("validation message"+Screen_Validation);
 					if(Screen_Validation.length()!=0)
 					{
-						System.out.println("PR-3341 Pass");
+						System.out.println("PR-2657 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
 						testLinkConnection.setsNotes("Basic Service definition is Passed");
 					}
 					else
 					{
-						System.out.println("PR-3341 Failed");
+						System.out.println("PR-2657 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 						testLinkConnection.setsNotes("Basic Service definition is Failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3341",driver);
-					System.out.println("Test__PR-3341___%Failed");
+					captureScreenShot.takeScreenShot("PR-2657",driver);
+					System.out.println("Test__PR-2657___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
 			}
 
-			
+
 
 			@Test(description="Service Group definition")
-			public void PR_3412() throws Exception
+			public void PR_2658() throws Exception
 			{
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3412",this);
-					System.out.println("PR-3412 Started");
+					testLinkConnection.setsTestCase("PR-2658",this);
+					System.out.println("PR-2658 Started");
 					Thread.sleep(2000);
 					relogin();
-
 					String GroupIdCountValue = "select COUNT(GROUP_ID) AS COUNT from SERVICE_GROUP  where GROUP_CODE='"+Prov_System_Name+"' or GROUP_NAME='"+Prov_System_Name+"'";
 					this.records=oDBConnection.fecthRecords(GroupIdCountValue);
 					this.record=this.records.get(0);
@@ -307,37 +319,40 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 						System.out.println("Group id already exists");
 						Screen_Validation="Group id already exists";
 					}
+
 					if(Screen_Validation.length()!=0)
 					{
-						System.out.println("PR-3412 Pass");
+						System.out.println("PR-2658 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
 						testLinkConnection.setsNotes("Service Group definition is Passed");
 					}
 					else
 					{
-						System.out.println("PR-3412 Failed");
+						System.out.println("PR-2658 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 						testLinkConnection.setsNotes("Service Group definition is Failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3412",driver);
-					System.out.println("Test__PR-3412___%Failed");
+					captureScreenShot.takeScreenShot("PR-2658",driver);
+					System.out.println("Test__PR-2658___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
 			}
 
-			
+
 
 			@Test(description="Bundle definition")
-			public void PR_3342() throws Exception
+			public void PR_2659() throws Exception
 			{
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3342",this);
-					System.out.println("PR-3342 Started");
+					testLinkConnection.setsTestCase("PR-2659",this);
+					System.out.println("PR-2659 Started");
+					Thread.sleep(2000);
+					relogin();
 					Thread.sleep(2000);
 					String BundleCountValue = "select COUNT(BUNDLE_ID) AS COUNT from bundle where BUNDLE_NAME='"+Prov_System_Name+"' or BUNDLE_CODE='"+Prov_System_Name+"'";
 					this.records=oDBConnection.fecthRecords(BundleCountValue);
@@ -356,50 +371,51 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 						Thread.sleep(2000);
 						System.out.println(Screen_Validation);
 					}
+
 					else 
 					{
 						System.out.println("Bundle already exists");
 						Screen_Validation="Bundle already exists";
 					}
+
 					if(Screen_Validation.length()!=0)
 					{
-						System.out.println("PR-3342 Pass");
+						System.out.println("PR-2659 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
 						testLinkConnection.setsNotes("Bundle definition is Passed");
 					}
 					else
 					{
-						System.out.println("PR-3342 Failed");
+						System.out.println("PR-2659 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 						testLinkConnection.setsNotes("Bundle definition is Failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3342",driver);
-					System.out.println("Test__PR-3342___%Failed");
+					captureScreenShot.takeScreenShot("PR-2659",driver);
+					System.out.println("Test__PR-2659___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
 			}
 
-			
+
 
 			@Test(description="Price plan definition")
-			public void PR_3343() throws Exception
+			public void PR_2660() throws Exception
 			{
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3343",this);
-					System.out.println("PR-3343 Started");
+					testLinkConnection.setsTestCase("PR-2660",this);
+					System.out.println("PR-2660 Started");
 					Thread.sleep(2000);
 					relogin();
-
-					String PricePlanCountValue = "select COUNT(PLAN_ID) AS COUNT from priceplan where PLAN_CODE='"+Prov_System_Name+"' or PLAN_DESC='"+Prov_System_Name+"'";
+					String PricePlanCountValue = "select COUNT(PLAN_ID) AS COUNT from priceplan where PLAN_CODE='"+Plan_code+"' or PLAN_DESC='"+Plan_code+"'";
 					this.records=oDBConnection.fecthRecords(PricePlanCountValue);
 					this.record=this.records.get(0);
 					String PricePlanCount=record.get("COUNT");
-					System.out.println("PricePlan Count is "+PricePlanCount);
+					System.out.println("Group Id Count is "+PricePlanCount);
 					int PricePlan_Count = Integer.parseInt(PricePlanCount);
 					System.out.println("Group Id Count is "+PricePlan_Count);
 
@@ -409,249 +425,140 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 						Thread.sleep(2000);
 						oNavigate.toPricePlan();
 						Thread.sleep(1000);
-						oPricePlan.PricePlanCreation(chargeUnit,Prov_System_Name,Prov_System_Name,"",Prov_System_Name,"","","","",locPlanType,"One Month"," "," ","",""," ","","Basic",""," "," ","","",locSaveOrCancelBtn,locpricingBtn,Eff_date,locPrice,locPricingSaveBtn);
+						oPricePlan.PricePlanCreation(chargeUnit,Plan_code,Plan_code,"",Prov_System_Name,"","","","",locPlanType,"One Month"," "," ","",""," ","","Basic",""," "," ","","SDFCSED",locSaveOrCancelBtn,locpricingBtn,Eff_date,locPrice,locPricingSaveBtn);
 						Screen_Validation=driver.findElement(ScreenOutPut).getText();
 						Thread.sleep(5000);
 						System.out.println(Screen_Validation);
 					}
+
 					else 
 					{
 						System.out.println("Price Plan  already exists");
 						Screen_Validation="Price Plan already exists";
 					}
+
 					if(Screen_Validation.length()!=0)
 					{
-						System.out.println("PR-3343 Pass");
+						System.out.println("PR-2660 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
 						testLinkConnection.setsNotes("Price plan definition is Passed");
 					}
 					else
 					{
-						System.out.println("PR-3343 Failed");
+						System.out.println("PR-2660 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Price plan definition is Failed");
+						testLinkConnection.setsNotes("Price plan definition Is failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3343",driver);
-					System.out.println("Test__PR-3343___%Failed");
+					captureScreenShot.takeScreenShot("PR-2660",driver);
+					System.out.println("Test__PR-2660___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
 			}
 
-			
 
-			@Test(description="Provision Service Definition")
-			public void PR_3428() throws Exception
+
+			@Test(description="Activity prerequisites")
+			public void PR_2661() throws Exception
 			{
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3428",this);
-					System.out.println("PR-3428 Started");
+					testLinkConnection.setsTestCase("PR-2661",this);
+					System.out.println("PR-2661 Started");
+					Thread.sleep(2000);
+					relogin();
+					Actionids_List = new ArrayList(10);
+					Actionids_List.add("89");
+					Actionids_List.add("16");
+					Actionids_List.add("18");
+					Actionids_List.add("17");
+					Actionids_List.add("19");
+					System.out.println("array list is "+Actionids_List);
+
+					oNavigate.toProvisioningSystemAction();
+					Thread.sleep(2000);
+					Screen_Validation=oProvisioningSystemAction.ProvisioningActionMapping(Prov_System_Name,Actionids_List,"Save");
+					System.out.println("validation message"+Screen_Validation);
+
+					Thread.sleep(2000);
+					/*relogin();
+					Thread.sleep(2000);
+					oNavigate.toActivityPrerequisites();
+					Thread.sleep(2000);
+					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"1","12","Pre Action","N",1);
+					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"16","87","Post Action","N",2);
+					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"85","12","Pre Action","N",3);
+					driver.findElement(btnsave).click();
+					String Screen_Validation1=driver.findElement(ValidationMessage).getText();
+					Thread.sleep(2000);
+					System.out.println(Screen_Validation1);
+					if(Screen_Validation1.length()!=0  && Screen_Validation.length()!=0 )
+					*/
+					if( Screen_Validation.length()!=0 )
+					{
+						System.out.println("PR-2661 Pass");
+						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
+						testLinkConnection.setsNotes("Activity prerequisites is Passed");
+					}
+					else
+					{
+						System.out.println("PR-2661 Failed");
+						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
+						testLinkConnection.setsNotes("Activity prerequisites is Failed");
+					}
+				}
+				catch(Exception e)
+				{
+					captureScreenShot.takeScreenShot("PR-2661",driver);
+					System.out.println("Test__PR-2661___%Failed");
+					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
+					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
+				}
+			}
+
+
+
+			@Test(description="Provision Service Definition")
+			public void PR_3390() throws Exception
+			{
+				try
+				{
+					testLinkConnection.setsTestCase("PR-3390",this);
+					System.out.println("PR-3390 Started");
 
 					Thread.sleep(2000);
 					relogin();
 					oNavigate.toProvisioningService();
 					Thread.sleep(2000);
 					Screen_Validation=oProvisioningService.ProvisioningServiceMapping(Prov_System_Name,"SERVICE",Prov_System_Name,"Save");
-					System.out.println("validation message is :-"+Screen_Validation);
+					System.out.println("validation message"+Screen_Validation);
 					if(Screen_Validation.length()!=0)
 					{
-						System.out.println("PR-3428 Pass");
+						System.out.println("PR-3390 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Price plan definition is Passed");
+						testLinkConnection.setsNotes("Provision Service Definition is Passed");
 					}
 					else
 					{
-						System.out.println("PR-3428 Failed");
+						System.out.println("PR-3390 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Price plan definition is Failed");
+						testLinkConnection.setsNotes("Provision Service Definition is Failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3428",driver);
-					System.out.println("Test__PR-3428___%Failed");
+					captureScreenShot.takeScreenShot("PR-3390",driver);
+					System.out.println("Test__PR-3390___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
 			}
 
-
-			// 3345 and 3346 need to write ..
-
-			@Test(description="Pre Requisite Mapping - Product Actions")
-			public void PR_3347() throws Exception
-			{
-				try
-				{
-					testLinkConnection.setsTestCase("PR-3347",this);
-					System.out.println("PR-3347 Started");
-					Thread.sleep(2000);
-					relogin();
-					Actionids_List = new ArrayList(10);
-					Actionids_List.add("1");
-					Actionids_List.add("2");
-					Actionids_List.add("22");
-					Actionids_List.add("24");
-					Actionids_List.add("83");
-					Actionids_List.add("85");
-					System.out.println("array list is "+Actionids_List);
-
-					oNavigate.toProvisioningSystemAction();
-					Thread.sleep(2000);
-					Screen_Validation=oProvisioningSystemAction.ProvisioningActionMapping(Prov_System_Name,Actionids_List,"Save");
-					System.out.println("validation message"+Screen_Validation);
-
-					Thread.sleep(2000);
-					relogin();
-					Thread.sleep(2000);
-					oNavigate.toActivityPrerequisites();
-					Thread.sleep(2000);
-					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"1","152","Pre Action","N",1);
-					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"1","10","Pre Action","N",2);
-					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"1","12","Pre Action","N",3);
-					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"1","21","Pre Action","N",4);
-					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"16","87","Post Action","N",5);
-
-					driver.findElement(btnsave).click();
-					String Screen_Validation1=driver.findElement(ValidationMessage).getText();
-					Thread.sleep(2000);
-					System.out.println(Screen_Validation1);
-					if(Screen_Validation1.length()!=0  && Screen_Validation.length()!=0 )
-					{
-						System.out.println("PR-3347 Pass");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Pre Requisite Mapping - Product Actions is Passed");
-					}
-					else
-					{
-						System.out.println("PR-3347 Failed");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Pre Requisite Mapping - Product Actions is Failed");
-					}
-				}
-				catch(Exception e)
-				{
-					captureScreenShot.takeScreenShot("PR-3347",driver);
-					System.out.println("Test__PR-3347___%Failed");
-					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
-				}
-			}
-
-
-			
-			@Test(description="Pre Requisite Mapping - Product List Actions")
-			public void PR_3358() throws Exception
-			{
-				try
-				{
-					testLinkConnection.setsTestCase("PR-3358",this);
-					System.out.println("PR-3358 Started");
-					Thread.sleep(2000);
-					relogin();
-
-					Thread.sleep(2000);
-					oNavigate.toActivityPrerequisites();
-					Thread.sleep(2000);
-					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"156","152","Pre Action","N",1);
-					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"156","10","Pre Action","N",2);
-					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"156","12","Pre Action","N",3);
-					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"156","21","Pre Action","N",4);
-					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"129","87","Post Action","N",5);
-
-					driver.findElement(btnsave).click();
-					String Screen_Validation1=driver.findElement(ValidationMessage).getText();
-					Thread.sleep(2000);
-					System.out.println(Screen_Validation1);
-					if(Screen_Validation1.length()!=0)
-					{
-						System.out.println("PR-3358 Pass");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Pre Requisite Mapping - Product List Actions is Passed");
-					}
-					else
-					{
-						System.out.println("PR-3358 Failed");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Pre Requisite Mapping - Product List Actions is Failed");
-					}
-				}
-				catch(Exception e)
-				{
-					captureScreenShot.takeScreenShot("PR-3358",driver);
-					System.out.println("Test__PR-3358___%Failed");
-					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
-				}
-			}
-
-			
-
-			@Test(description="Pre Requisite Mapping - Family Actions")
-			public void PR_3371() throws Exception
-			{
-				try
-				{
-					testLinkConnection.setsTestCase("PR-3371",this);
-					System.out.println("PR-3371 Started");
-					Thread.sleep(2000);
-					relogin();
-					Actionids_List = new ArrayList(10);
-					Actionids_List.add("1");
-					Actionids_List.add("2");
-					Actionids_List.add("22");
-					Actionids_List.add("24");
-					Actionids_List.add("83");
-					Actionids_List.add("85");
-					System.out.println("array list is "+Actionids_List);
-
-					oNavigate.toProvisioningSystemAction();
-					Thread.sleep(2000);
-					Screen_Validation=oProvisioningSystemAction.ProvisioningActionMapping(Prov_System_Name,Actionids_List,"Save");
-					System.out.println("validation message"+Screen_Validation);
-
-					Thread.sleep(2000);
-					relogin();
-					Thread.sleep(2000);
-					oNavigate.toActivityPrerequisites();
-					Thread.sleep(2000);
-					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"1","10","Pre Action","N",1);
-					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"1","13","Pre Action","N",2);
-					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"16","87","Post Action","N",3);
-
-					driver.findElement(btnsave).click();
-					String Screen_Validation1=driver.findElement(ValidationMessage).getText();
-					Thread.sleep(2000);
-					System.out.println(Screen_Validation1);
-					if(Screen_Validation1.length()!=0  && Screen_Validation.length()!=0 )
-					{
-						System.out.println("PR-3371 Pass");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Pre Requisite Mapping - Family Actions is Passed");
-					}
-					else
-					{
-						System.out.println("PR-3371 Failed");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Pre Requisite Mapping - Family Actions is Failed");
-					}
-				}
-				catch(Exception e)
-				{
-					captureScreenShot.takeScreenShot("PR-3371",driver);
-					System.out.println("Test__PR-3371___%Failed");
-					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
-				}
-			}
 
 			// End of Basic Configuration
-
-
 
 			//   Start of  Bussiness Processes For Abv
 
@@ -659,15 +566,16 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 
 
 
-			@Test(description="Activation – New Agreement - Add Product")
-			public void PR_3348() throws Exception
+			@Test(description="Customer activation")
+			public void PR_2662() throws Exception
 			{
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3348",this);
-					System.out.println("PR-3348 Started");
+					testLinkConnection.setsTestCase("PR-2662",this);
+					System.out.println("PR-2662 Started");
+					relogin();
 					Thread.sleep(2000);
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
+					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Plan_code,"Y",billing_Frequency);
 					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
 					System.out.println("Contract Number is : "+ContractNumber);
 					Thread.sleep(90000);
@@ -683,21 +591,21 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					System.out.println(Qstatus); 
 					if(Qstatus.equalsIgnoreCase(C_Status))
 					{
-						System.out.println("PR-3348 Pass");
+						System.out.println("PR-2662 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Activation – New Agreement - Add Product is Passed");
+						testLinkConnection.setsNotes("Customer activation is Passed");
 					}
 					else
 					{
-						System.out.println("PR-3348 Failed");
+						System.out.println("PR-2662 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Activation – New Agreement - Add Product is Failed");
+						testLinkConnection.setsNotes("Customer activation is Failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3348",driver);
-					System.out.println("Test__PR-3348___%Failed");
+					captureScreenShot.takeScreenShot("PR-2662",driver);
+					System.out.println("Test__PR-2662___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
@@ -705,15 +613,15 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 
 
 
-			@Test(description="Disconnection Agreement - Remove Product")
-			public void PR_3349() throws Exception
+			@Test(description="Disconnection")
+			public void PR_2663() throws Exception
 			{
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3349",this);
-					System.out.println("PR-3349 Started");
+					testLinkConnection.setsTestCase("PR-2663",this);
+					System.out.println("PR-2663 Started");
 					Thread.sleep(5000);
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
+					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Plan_code,"Y",billing_Frequency);
 					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
 					System.out.println("Contract Number is : "+ContractNumber);
 
@@ -726,6 +634,7 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					System.out.println("Disconnection is done");
 					Thread.sleep(80000);
 
+
 					String Customer_id = "Select CUSTOMER_ID from Customer_tbl where customer_nbr='"+CustomerNumber+"' ";
 					this.records=oDBConnection.fecthRecords(Customer_id);
 					this.record=this.records.get(0);
@@ -737,21 +646,21 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					System.out.println(Qstatus); 
 					if(Qstatus.equalsIgnoreCase(C_Status))
 					{
-						System.out.println("PR-3349 Pass");
+						System.out.println("PR-2663 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Disconnection Agreement - Remove Product is Passed");
+						testLinkConnection.setsNotes("Disconnection is Passed");
 					}
 					else
 					{
-						System.out.println("PR-3349 Failed");
+						System.out.println("PR-2663 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Disconnection Agreement - Remove Product is Failed");
+						testLinkConnection.setsNotes("Disconnection Is Failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3349",driver);
-					System.out.println("Test__PR-3349___%Failed");
+					captureScreenShot.takeScreenShot("PR-2663",driver);
+					System.out.println("Test__PR-2663___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
@@ -759,15 +668,15 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 
 
 
-			@Test(description="Reconnection Agreement - Reconnect Add Product")
-			public void PR_3350() throws Exception
+			@Test(description="Reconnection")
+			public void PR_2664() throws Exception
 			{
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3350",this);
-					System.out.println("PR-3350 Started");
+					testLinkConnection.setsTestCase("PR-2664",this);
+					System.out.println("PR-2664 Started");
 					Thread.sleep(2000);
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
+					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Plan_code,"Y",billing_Frequency);
 					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
 					System.out.println("Contract Number is : "+ContractNumber);
 
@@ -787,7 +696,7 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					String success_Msg1 = driver.findElement(By.xpath(".//*[@id='ctl00__infoSpan']")).getText();
 					System.out.println("Success message is:"+success_Msg1);
 					System.out.println("Reconnection is done");
-					Thread.sleep(80000);
+					Thread.sleep(90000);
 
 					String Customer_id = "Select CUSTOMER_ID from Customer_tbl where customer_nbr='"+CustomerNumber+"' ";
 					this.records=oDBConnection.fecthRecords(Customer_id);
@@ -800,21 +709,21 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					System.out.println(Qstatus); 
 					if(Qstatus.equalsIgnoreCase(C_Status))
 					{
-						System.out.println("PR-3350 Pass");
+						System.out.println("PR-2664 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Reconnection Agreement - Reconnect Add Product is Passed");
+						testLinkConnection.setsNotes("Reconnection Is Passed");
 					}
 					else
 					{
-						System.out.println("PR-3350 Failed");
+						System.out.println("PR-2664 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Reconnection Agreement - Reconnect Add Product is Failed");
+						testLinkConnection.setsNotes("Reconnection is failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3350",driver);
-					System.out.println("Test__PR-3350___%Failed");
+					captureScreenShot.takeScreenShot("PR-2664",driver);
+					System.out.println("Test__PR-2664___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
@@ -822,15 +731,15 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 
 
 
-			@Test(description="Suspend Agreement - Suspend Product")
-			public void PR_3351() throws Exception
+			@Test(description="Suspend")
+			public void PR_2665() throws Exception
 			{
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3351",this);
-					System.out.println("PR-3351 Started");
+					testLinkConnection.setsTestCase("PR-2665",this);
+					System.out.println("PR-2665 Started");
 					Thread.sleep(2000);
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
+					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Plan_code,"Y",billing_Frequency);
 					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
 					System.out.println("Contract Number is : "+ContractNumber);
 
@@ -852,21 +761,21 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					System.out.println(Qstatus); 
 					if(Qstatus.equalsIgnoreCase(C_Status))        	
 					{
-						System.out.println("PR-3351 Pass");
+						System.out.println("PR-2665 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Suspend Agreement - Suspend Product is Passed");
+						testLinkConnection.setsNotes("Suspend is Passed");
 					}
 					else
 					{
-						System.out.println("PR-3351 Failed");
+						System.out.println("PR-2665 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Suspend Agreement - Suspend Product is Failed");
+						testLinkConnection.setsNotes("Suspend Agreement is Failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3351",driver);
-					System.out.println("Test__PR-3351___%Failed");
+					captureScreenShot.takeScreenShot("PR-2665",driver);
+					System.out.println("Test__PR-2665___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
@@ -874,18 +783,19 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 
 
 
-			@Test(description="Reactivate Agreement - Reactivate Product")
-			public void PR_3352() throws Exception
+			@Test(description="Reactivate")
+			public void PR_2666() throws Exception
 			{
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3352",this);
-					System.out.println("PR-3352 Started");
+					testLinkConnection.setsTestCase("PR-2666",this);
+					System.out.println("PR-2666 Started");
 					Thread.sleep(2000);
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
+					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Plan_code,"Y",billing_Frequency);
 					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
 					System.out.println("Contract Number is : "+ContractNumber);
 
+					Thread.sleep(10000);
 					oNavigate.toCollection();
 					oCollections.collectionHeader(CustomerNumber, "","", "", "", "", "", "");
 					Thread.sleep(5000);
@@ -900,6 +810,7 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					Thread.sleep(70000);
 					Thread.sleep(75000);
 
+
 					String Customer_id = "Select CUSTOMER_ID from Customer_tbl where customer_nbr='"+CustomerNumber+"' ";
 					this.records=oDBConnection.fecthRecords(Customer_id);
 					this.record=this.records.get(0);
@@ -911,21 +822,21 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					System.out.println(Qstatus); 
 					if(Qstatus.equalsIgnoreCase(C_Status))
 					{
-						System.out.println("PR-3352 Pass");
+						System.out.println("PR-2666 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Reactivate Agreement - Reactivate Product is Passed");
+						testLinkConnection.setsNotes("Reactivate Agreement is passed");
 					}
 					else
 					{
-						System.out.println("PR-3352 Failed");
+						System.out.println("PR-2666 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Reactivate Agreement - Reactivate Product is Failed");
+						testLinkConnection.setsNotes("Reactivate Agreement is failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3352",driver);
-					System.out.println("Test__PR-3352___%Failed");
+					captureScreenShot.takeScreenShot("PR-2666",driver);
+					System.out.println("Test__PR-2666___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
@@ -933,16 +844,114 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 
 
 
-			@Test(description="Hardware Change - HW Change Add Product")
-			public void PR_3353() throws Exception
+			@Test(description="Retracking")
+			public void PR_2667() throws Exception
+			{
+				try
+				{
+					testLinkConnection.setsTestCase("PR-2667",this);
+					System.out.println("PR-2667 Started");
+					Thread.sleep(2000);
+					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Plan_code,"Y",billing_Frequency);
+					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
+					System.out.println("Contract Number is : "+ContractNumber);
+
+					Thread.sleep(80000);
+					oNavigate.toRetracking();
+					oRetracking.RetrackingScreen(CustomerNumber, "Service",1, "N", "Save");
+					Thread.sleep(70000);
+					String Customer_id = "Select CUSTOMER_ID from Customer_tbl where customer_nbr='"+CustomerNumber+"' ";
+					this.records=oDBConnection.fecthRecords(Customer_id);
+					this.record=this.records.get(0);
+					String Party_id=record.get("CUSTOMER_ID");
+					String Status = "select * from provsion_process_request where party_id= '"+Party_id+"' and BIZ_PROCESS_ID in (17,18)   order by 1 desc ";
+					this.records=oDBConnection.fecthRecords(Status);
+					this.record=this.records.get(0);
+					String Qstatus=record.get("STATUS");
+					System.out.println(Qstatus); 
+					if(Qstatus.equalsIgnoreCase(C_Status))
+					{
+						System.out.println("PR-2667 Pass");
+						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
+						testLinkConnection.setsNotes("Retracking Is Passed");
+					}
+					else
+					{
+						System.out.println("PR-2667 Failed");
+						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
+						testLinkConnection.setsNotes("Retracking Is failed");
+					}
+				}
+				catch(Exception e)
+				{
+					captureScreenShot.takeScreenShot("PR-2667",driver);
+					System.out.println("Test__PR-2667___%Failed");
+					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
+					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
+				}
+			}
+
+
+
+			@Test(description="Retrack with unique id")    
+			public void PR_2668() throws Exception
+			{
+				try
+				{
+					testLinkConnection.setsTestCase("PR-2668",this);
+					System.out.println("PR-2668 Started");
+					Thread.sleep(2000);
+					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Plan_code,"Y",billing_Frequency);
+					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
+					System.out.println("Contract Number is : "+ContractNumber);
+
+					Thread.sleep(80000);
+					oNavigate.toRetracking();
+					oRetracking.RetrackingScreen(CustomerNumber, "UniqueId",1, "N", "Save");
+					Thread.sleep(80000);
+					String Customer_id = "Select CUSTOMER_ID from Customer_tbl where customer_nbr='"+CustomerNumber+"' ";
+					this.records=oDBConnection.fecthRecords(Customer_id);
+					this.record=this.records.get(0);
+					String Party_id=record.get("CUSTOMER_ID");
+					String Status = "select * from provsion_process_request where party_id= '"+Party_id+"' and BIZ_PROCESS_ID in (17,18)   order by 1 desc ";
+					this.records=oDBConnection.fecthRecords(Status);
+					this.record=this.records.get(0);
+					String Qstatus=record.get("STATUS");
+					System.out.println(Qstatus); 
+					if(Qstatus.equalsIgnoreCase(C_Status))
+					{
+						System.out.println("PR-2668 Pass");
+						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
+						testLinkConnection.setsNotes("Retracking with uniqueid Is passed");
+					}
+					else
+					{
+						System.out.println("PR-2668 Failed");
+						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
+						testLinkConnection.setsNotes("Retracking with uniqueid Is Failed");
+					}
+				}
+				catch(Exception e)
+				{
+					captureScreenShot.takeScreenShot("PR-2668",driver);
+					System.out.println("Test__PR-2668___%Failed");
+					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
+					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
+				}
+			}
+
+
+
+			@Test(description="Hardware change")
+			public void PR_2669() throws Exception
 			{
 
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3353",this);
-					System.out.println("PR-3353 Started");
+					testLinkConnection.setsTestCase("PR-2669",this);
+					System.out.println("PR-2669 Started");
 					Thread.sleep(2000);
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Sale", "", "","",Prov_System_Name,"Y",billing_Frequency);
+					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Sale", "", "","",Plan_code,"Y",billing_Frequency);
 					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
 					System.out.println("Contract Number is : "+ContractNumber);
 
@@ -968,21 +977,21 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 
 					if(Qstatus.equalsIgnoreCase(C_Status))
 					{
-						System.out.println("PR-3353 Pass");
+						System.out.println("PR-2669 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Hardware Change - HW Change Add Product is Passed");
+						testLinkConnection.setsNotes("Hardware change Is Passed");
 					}
 					else
 					{
-						System.out.println("PR-3353 Failed");
+						System.out.println("PR-2669 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Hardware Change - HW Change Add Product is Failed");
+						testLinkConnection.setsNotes("Hardware change Is Failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3353",driver);
-					System.out.println("Test__PR-3353___%Failed");
+					captureScreenShot.takeScreenShot("PR-2669",driver);
+					System.out.println("Test__PR-2669___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
@@ -990,15 +999,16 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 
 
 
-			@Test(description="Renewal - Renew Add Product")
-			public void PR_3354() throws Exception
+			@Test(description="Renewal")
+			public void PR_2670() throws Exception
 			{
+
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3354",this);
-					System.out.println("PR-3354 Started");
+					testLinkConnection.setsTestCase("PR-2670",this);
+					System.out.println("PR-2670 Started");
 					Thread.sleep(2000);
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
+					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Plan_code,"Y",billing_Frequency);
 					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
 					System.out.println("Contract Number is : "+ContractNumber);
 					Thread.sleep(2000);
@@ -1019,7 +1029,6 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					System.out.println(" Renewal Request Is updated and commited succefully");
 					Thread.sleep(2000);
 					Thread.sleep(90000);
-
 					String Status = "select * from provsion_process_request where party_id= '"+Party_id+"' and BIZ_PROCESS_ID=13  order by 1 desc ";
 					this.records=oDBConnection.fecthRecords(Status);
 					this.record=this.records.get(0);
@@ -1027,147 +1036,47 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					System.out.println(Qstatus);
 					if(Qstatus.equalsIgnoreCase(C_Status))        	
 					{
-						System.out.println("PR-3354 Pass");
+						System.out.println("PR-2670 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Renewal - Renew Add Product is Passed");
+						testLinkConnection.setsNotes("Renewal Is Passed");
 					}
 					else
 					{
-						System.out.println("PR-3354 Failed");
+						System.out.println("PR-2670 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Renewal - Renew Add Product is Failed");
+						testLinkConnection.setsNotes("Renewal Is failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3354",driver);
-					System.out.println("Test__PR-3354___%Failed");
+					captureScreenShot.takeScreenShot("PR-2670",driver);
+					System.out.println("Test__PR-2670___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
 			}
-
-
-
-			@Test(description="Retrack - Retrack Product")
-			public void PR_3355() throws Exception
-			{
-				try
-				{
-					testLinkConnection.setsTestCase("PR-3355",this);
-					System.out.println("PR-3355 Started");
-					Thread.sleep(2000);
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
-					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
-					System.out.println("Contract Number is : "+ContractNumber);
-
-					Thread.sleep(80000);
-					oNavigate.toRetracking();
-					oRetracking.RetrackingScreen(CustomerNumber, "Service",1, "N", "Save");
-					Thread.sleep(70000);
-
-					String Customer_id = "Select CUSTOMER_ID from Customer_tbl where customer_nbr='"+CustomerNumber+"' ";
-					this.records=oDBConnection.fecthRecords(Customer_id);
-					this.record=this.records.get(0);
-					String Party_id=record.get("CUSTOMER_ID");
-					String Status = "select * from provsion_process_request where party_id= '"+Party_id+"' and BIZ_PROCESS_ID in (17,18)   order by 1 desc ";
-					this.records=oDBConnection.fecthRecords(Status);
-					this.record=this.records.get(0);
-					String Qstatus=record.get("STATUS");
-					System.out.println(Qstatus); 
-					if(Qstatus.equalsIgnoreCase(C_Status))
-					{
-						System.out.println("PR-3355 Pass");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Retrack - Retrack Product is Passed");
-					}
-					else
-					{
-						System.out.println("PR-3355 Failed");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Retracking Is In Pending");
-					}
-				}
-				catch(Exception e)
-				{
-					captureScreenShot.takeScreenShot("PR-3355",driver);
-					System.out.println("Test__PR-3355___%Failed");
-					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
-				}
-			}
-
-
-
-			@Test(description="Retrack with Initialize - Retrack Product")    
-			public void PR_3356() throws Exception
-			{
-				try
-				{
-					testLinkConnection.setsTestCase("PR-3356",this);
-					System.out.println("PR-3356 Started");
-					Thread.sleep(2000);
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
-					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
-					System.out.println("Contract Number is : "+ContractNumber);
-
-					Thread.sleep(80000);
-					oNavigate.toRetracking();
-					oRetracking.RetrackingScreen(CustomerNumber, "UniqueId",1, "N", "Save");
-					Thread.sleep(80000);
-
-					String Customer_id = "Select CUSTOMER_ID from Customer_tbl where customer_nbr='"+CustomerNumber+"' ";
-					this.records=oDBConnection.fecthRecords(Customer_id);
-					this.record=this.records.get(0);
-					String Party_id=record.get("CUSTOMER_ID");
-					String Status = "select * from provsion_process_request where party_id= '"+Party_id+"' and BIZ_PROCESS_ID in (17,18)   order by 1 desc ";
-					this.records=oDBConnection.fecthRecords(Status);
-					this.record=this.records.get(0);
-					String Qstatus=record.get("STATUS");
-					System.out.println(Qstatus); 
-					if(Qstatus.equalsIgnoreCase(C_Status))
-					{
-						System.out.println("PR-3356 Pass");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Retrack with Initialize - Retrack Product is Passed");
-					}
-					else
-					{
-						System.out.println("PR-3356 Failed");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Retrack with Initialize - Retrack Product is failed");
-					}
-				}
-				catch(Exception e)
-				{
-					captureScreenShot.takeScreenShot("PR-3356",driver);
-					System.out.println("Test__PR-3356___%Failed");
-					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
-				}
-			}
-
 
 
 			// END OF ADD-PRODUCT..
 
 			// Start of actvate all case's
 
-			@Test(description="Provision Actions - Product List Action")
-			public void PR_3357() throws Exception
+			@Test(description="Provisioning system action  --FOR 89 ACTION")
+			public void PR_2671() throws Exception
 			{
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3357",this);
-					System.out.println("PR-3357 Started");
+					testLinkConnection.setsTestCase("PR-2671",this);
+					System.out.println("PR-2671 Started");
 					Thread.sleep(2000);
 					relogin();
 					Actionids_List = new ArrayList(10);
 					Actionids_List.add("156");
 					Actionids_List.add("129");
+					Actionids_List.add("22");
+					Actionids_List.add("24");
 					Actionids_List.add("158");
-					Actionids_List.add("159");
-					Actionids_List.add("160");
+
 					System.out.println("array list is "+Actionids_List);
 
 					oNavigate.toProvisioningSystemAction();
@@ -1176,23 +1085,34 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					System.out.println("validation message"+Screen_Validation);
 
 					Thread.sleep(2000);
-					if(Screen_Validation.length()!=0 )
+					relogin();
+					Thread.sleep(2000);
+					oNavigate.toActivityPrerequisites();
+					Thread.sleep(2000);
+					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"156","12","Pre Action","N",1);
+					oActivityPrerequisites.ProvActivityPrerequisitesMapping(Prov_System_Name,Service_Class,"129","87","Post Action","N",2);
+
+					driver.findElement(btnsave).click();
+					String Screen_Validation1=driver.findElement(ValidationMessage).getText();
+					Thread.sleep(2000);
+					System.out.println(Screen_Validation1);
+					if(Screen_Validation1.length()!=0  && Screen_Validation.length()!=0 )
 					{
-						System.out.println("PR-3357 Pass");
+						System.out.println("PR-2671 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Provision Actions - Product List Action is Passed");
+						testLinkConnection.setsNotes(" Customer is Actvated with out hardware  ");
 					}
 					else
 					{
-						System.out.println("PR-3357 Failed");
+						System.out.println("PR-2671 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Provision Actions - Product List Action is Failed");
+						testLinkConnection.setsNotes("Status is not active and success message is not displaying");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3357",driver);
-					System.out.println("Test__PR-3357___%Failed");
+					captureScreenShot.takeScreenShot("PR-2671",driver);
+					System.out.println("Test__PR-2671___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
@@ -1200,17 +1120,17 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 
 
 
-			@Test(description="Activation – New Agreement - Activate Product List")
-			public void PR_3359() throws Exception
+			@Test(description="Customer activation with ACTIVATEALL")
+			public void PR_2672() throws Exception
 			{
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3359",this);
-					System.out.println("PR-3359 Started");
+					testLinkConnection.setsTestCase("PR-2672",this);
+					System.out.println("PR-2672 Started");
 					Thread.sleep(2000);
 					relogin();
-
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
+					Thread.sleep(2000);
+					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Plan_code,"Y",billing_Frequency);
 					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
 					System.out.println("Contract Number is : "+ContractNumber);
 					Thread.sleep(90000);
@@ -1226,21 +1146,21 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					System.out.println(Qstatus); 
 					if(Qstatus.equalsIgnoreCase(C_Status))
 					{
-						System.out.println("PR-3359 Pass");
+						System.out.println("PR-2672 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Activation – New Agreement - Activate Product List is Passed");
+						testLinkConnection.setsNotes("Customer activation with ACTIVATEALL is Passed");
 					}
 					else
 					{
-						System.out.println("PR-3359 Failed");
+						System.out.println("PR-2672 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Activation – New Agreement - Activate Product List is Failed");
+						testLinkConnection.setsNotes("Customer activation with ACTIVATEALL is Failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3359",driver);
-					System.out.println("Test__PR-3359___%Failed");
+					captureScreenShot.takeScreenShot("PR-2672",driver);
+					System.out.println("Test__PR-2672___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
@@ -1248,15 +1168,15 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 
 
 
-			@Test(description="Disconnection Agreement - Disconnect Products")
-			public void PR_3360() throws Exception
+			@Test(description="Disconnection with DISCONNECTALL")
+			public void PR_2673() throws Exception
 			{
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3360",this);
-					System.out.println("PR-3360 Started");
+					testLinkConnection.setsTestCase("PR-2673",this);
+					System.out.println("PR-2673 Started");
 					Thread.sleep(5000);
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
+					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Plan_code,"Y",billing_Frequency);
 					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
 					System.out.println("Contract Number is : "+ContractNumber);
 
@@ -1268,6 +1188,7 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					System.out.println("Success message is:"+success_Msg);
 					System.out.println("Disconnection is done");
 					Thread.sleep(80000);
+
 
 					String Customer_id = "Select CUSTOMER_ID from Customer_tbl where customer_nbr='"+CustomerNumber+"' ";
 					this.records=oDBConnection.fecthRecords(Customer_id);
@@ -1280,101 +1201,151 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					System.out.println(Qstatus); 
 					if(Qstatus.equalsIgnoreCase(C_Status))
 					{
-						System.out.println("PR-3360 Pass");
+						System.out.println("PR-2673 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Disconnection Agreement - Disconnect Products is Passed");
+						testLinkConnection.setsNotes("Disconnection with DISCONNECTALL is Passed");
 					}
 					else
 					{
-						System.out.println("PR-3360 Failed");
+						System.out.println("PR-2673 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Disconnection Agreement - Disconnect Products is Failed");
+						testLinkConnection.setsNotes("Disconnection with DISCONNECTALL is Failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3360",driver);
-					System.out.println("Test__PR-3360___%Failed");
+					captureScreenShot.takeScreenShot("PR-2673",driver);
+					System.out.println("Test__PR-2673___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
 			}
 
-			
 
-			@Test(description="Reconnection Agreement - Activate Product List")
-			public void PR_3361() throws Exception
+
+			@Test(description="Suspend Agreement with suspend all")
+			public void PR_2674() throws Exception
 			{
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3361",this);
-					System.out.println("PR-3361 Started");
+					testLinkConnection.setsTestCase("PR-2674",this);
+					System.out.println("PR-2674 Started");
 					Thread.sleep(2000);
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
+					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Plan_code,"Y",billing_Frequency);
 					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
 					System.out.println("Contract Number is : "+ContractNumber);
 
-					Thread.sleep(3000);
-					oNavigate.toDisconnection();
+					oNavigate.toCollection();
+					oCollections.collectionHeader(CustomerNumber, "","", "", "", "", "", "");
 					Thread.sleep(5000);
-					logger.info("Successfully Navigated to Disconnection Screen ");
-					sResult = oDisconnection.Disconnect_SingleContract("",ContractNumber,"",Reason,"Y","");
-					String success_Msg = driver.findElement(By.xpath(".//*[@id='ctl00__infoSpan']")).getText();
-					System.out.println("Success message is:"+success_Msg);
-					System.out.println("Disconnection is done");
+					oCollections.collectionGrid("", "","Suspend Provisioning", "", "Save");
+					Thread.sleep(75000);
+					Thread.sleep(75000);
 
-					oNavigate.toReconnection();
-					oWaitTool.implicitWait(10);
-					oReconnection.Reconnect_SingleContract("","","",ContractNumber,"Y","");
-					oWaitTool.implicitWait(50);
 
-					String success_Msg1 = driver.findElement(By.xpath(".//*[@id='ctl00__infoSpan']")).getText();
-					System.out.println("Success message is:"+success_Msg1);
-					System.out.println("Reconnection is done");
-					Thread.sleep(80000);
 					String Customer_id = "Select CUSTOMER_ID from Customer_tbl where customer_nbr='"+CustomerNumber+"' ";
 					this.records=oDBConnection.fecthRecords(Customer_id);
 					this.record=this.records.get(0);
 					String Party_id=record.get("CUSTOMER_ID");
-					String Status = "select * from provsion_process_request where party_id= '"+Party_id+"' and BIZ_PROCESS_ID=7 order by 1 desc";
+					String Status = "select * from provsion_process_request where party_id= '"+Party_id+"' and BIZ_PROCESS_ID=10 order by 1 desc";
+					this.records=oDBConnection.fecthRecords(Status);
+					this.record=this.records.get(0);
+					String Qstatus=record.get("STATUS");
+					System.out.println(Qstatus); 
+					if(Qstatus.equalsIgnoreCase(C_Status))        	
+					{
+						System.out.println("PR-2674 Pass");
+						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
+						testLinkConnection.setsNotes("Suspend Agreement with suspend all Is Passed");
+					}
+					else
+					{
+						System.out.println("PR-2674 Failed");
+						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
+						testLinkConnection.setsNotes("Suspend Agreement with suspend all Is Failed");
+					}
+				}
+				catch(Exception e)
+				{
+					captureScreenShot.takeScreenShot("PR-2674",driver);
+					System.out.println("Test__PR-2674___%Failed");
+					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
+					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
+				}
+			}
+
+
+
+			@Test(description="Reactivate Agreement with Reactivate all")
+			public void PR_2675() throws Exception
+			{
+				try
+				{
+					testLinkConnection.setsTestCase("PR-2675",this);
+					System.out.println("PR-2675 Started");
+					Thread.sleep(2000);
+					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Plan_code,"Y",billing_Frequency);
+					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
+					System.out.println("Contract Number is : "+ContractNumber);
+
+					oNavigate.toCollection();
+					oCollections.collectionHeader(CustomerNumber, "","", "", "", "", "", "");
+					Thread.sleep(5000);
+					oCollections.collectionGrid("", "","Suspend Provisioning", "", "Save");
+					Thread.sleep(75000);
+					Thread.sleep(75000);
+
+					oNavigate.toCollection();
+					oCollections.collectionHeader(CustomerNumber, "","", "", "", "", "", "");
+					Thread.sleep(5000);
+					oCollections.collectionGrid("", "","Active", "", "Save");
+					Thread.sleep(70000);
+					Thread.sleep(75000);
+
+
+					String Customer_id = "Select CUSTOMER_ID from Customer_tbl where customer_nbr='"+CustomerNumber+"' ";
+					this.records=oDBConnection.fecthRecords(Customer_id);
+					this.record=this.records.get(0);
+					String Party_id=record.get("CUSTOMER_ID");
+					String Status = "select * from provsion_process_request where party_id= '"+Party_id+"' and BIZ_PROCESS_ID=6 order by 1 desc";
 					this.records=oDBConnection.fecthRecords(Status);
 					this.record=this.records.get(0);
 					String Qstatus=record.get("STATUS");
 					System.out.println(Qstatus); 
 					if(Qstatus.equalsIgnoreCase(C_Status))
 					{
-						System.out.println("PR-3361 Pass");
+						System.out.println("PR-2675 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Reconnection Agreement - Activate Product List is Passed");
+						testLinkConnection.setsNotes("Reactivate Agreement with Reactivate all Is Passed");
 					}
 					else
 					{
-						System.out.println("PR-3361 Failed");
+						System.out.println("PR-2675 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Reconnection Agreement - Activate Product List is failed");
+						testLinkConnection.setsNotes("Reactivate Agreement with Reactivate all Is failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3361",driver);
-					System.out.println("Test__PR-3361___%Failed");
+					captureScreenShot.takeScreenShot("PR-2675",driver);
+					System.out.println("Test__PR-2675___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
 			}
 
-			
 
-			@Test(description="Hardware Change - Activate Product List & Disconnect Products")
-			public void PR_3362() throws Exception
+
+			@Test(description="Hardware Change- Hardware change single request")
+			public void PR_2676() throws Exception
 			{
 
 				try
 				{
-					testLinkConnection.setsTestCase("PR-3362",this);
-					System.out.println("PR-3362 Started");
+					testLinkConnection.setsTestCase("PR-2676",this);
+					System.out.println("PR-2676 Started");
 					Thread.sleep(2000);
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Sale", "", "","",Prov_System_Name,"Y",billing_Frequency);
+					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Sale", "", "","",Plan_code,"Y",billing_Frequency);
 					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
 					System.out.println("Contract Number is : "+ContractNumber);
 
@@ -1397,289 +1368,24 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 					this.record=this.records.get(0);
 					String Qstatus=record.get("STATUS");
 					System.out.println(Qstatus); 
+
 					if(Qstatus.equalsIgnoreCase(C_Status))
 					{
-						System.out.println("PR-3362 Pass");
+						System.out.println("PR-2676 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Hardware Change - Activate Product List & Disconnect Products is Passed");
+						testLinkConnection.setsNotes("Hardware Change- Hardware change single request is Passed");
 					}
 					else
 					{
-						System.out.println("PR-3362 Failed");
+						System.out.println("PR-2676 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Hardware Change - Activate Product List & Disconnect Products is failed");
+						testLinkConnection.setsNotes("Hardware Change- Hardware change single request is Failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-3362",driver);
-					System.out.println("Test__PR-3362___%Failed");
-					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
-				}
-			}
-
-			
-
-			@Test(description="Suspend Agreement - Suspend Product List")
-			public void PR_3363() throws Exception
-			{
-				try
-				{
-					testLinkConnection.setsTestCase("PR-3363",this);
-					System.out.println("PR-3363 Started");
-					Thread.sleep(2000);
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
-					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
-					System.out.println("Contract Number is : "+ContractNumber);
-
-					oNavigate.toCollection();
-					oCollections.collectionHeader(CustomerNumber, "","", "", "", "", "", "");
-					Thread.sleep(5000);
-					oCollections.collectionGrid("", "","Suspend Provisioning", "", "Save");
-					Thread.sleep(85000);
-					Thread.sleep(95000);
-
-					String Customer_id = "Select CUSTOMER_ID from Customer_tbl where customer_nbr='"+CustomerNumber+"' ";
-					this.records=oDBConnection.fecthRecords(Customer_id);
-					this.record=this.records.get(0);
-					String Party_id=record.get("CUSTOMER_ID");
-					String Status = "select * from provsion_process_request where party_id= '"+Party_id+"' and BIZ_PROCESS_ID=10 order by 1 desc";
-					this.records=oDBConnection.fecthRecords(Status);
-					this.record=this.records.get(0);
-					String Qstatus=record.get("STATUS");
-					System.out.println(Qstatus); 
-					if(Qstatus.equalsIgnoreCase(C_Status))        	
-					{
-						System.out.println("PR-3363 Pass");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Suspend Agreement - Suspend Product List is Passed");
-					}
-					else
-					{
-						System.out.println("PR-3363 Failed");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Suspend Agreement - Suspend Product List is failed");
-					}
-				}
-				catch(Exception e)
-				{
-					captureScreenShot.takeScreenShot("PR-3363",driver);
-					System.out.println("Test__PR-3363___%Failed");
-					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
-				}
-			}
-
-
-			
-			@Test(description="Reactivate Agreement - Reactivate Product List")
-			public void PR_3364() throws Exception
-			{
-				try
-				{
-					testLinkConnection.setsTestCase("PR-3364",this);
-					System.out.println("PR-3364 Started");
-					Thread.sleep(2000);
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
-					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
-					System.out.println("Contract Number is : "+ContractNumber);
-
-					oNavigate.toCollection();
-					oCollections.collectionHeader(CustomerNumber, "","", "", "", "", "", "");
-					Thread.sleep(5000);
-					oCollections.collectionGrid("", "","Suspend Provisioning", "", "Save");
-					Thread.sleep(85000);
-					Thread.sleep(95000);
-
-					oNavigate.toCollection();
-					oCollections.collectionHeader(CustomerNumber, "","", "", "", "", "", "");
-					Thread.sleep(5000);
-					oCollections.collectionGrid("", "","Active", "", "Save");
-					Thread.sleep(70000);
-					Thread.sleep(75000);
-
-					String Customer_id = "Select CUSTOMER_ID from Customer_tbl where customer_nbr='"+CustomerNumber+"' ";
-					this.records=oDBConnection.fecthRecords(Customer_id);
-					this.record=this.records.get(0);
-					String Party_id=record.get("CUSTOMER_ID");
-					String Status = "select * from provsion_process_request where party_id= '"+Party_id+"' and BIZ_PROCESS_ID=6 order by 1 desc";
-					this.records=oDBConnection.fecthRecords(Status);
-					this.record=this.records.get(0);
-					String Qstatus=record.get("STATUS");
-					System.out.println(Qstatus); 
-					if(Qstatus.equalsIgnoreCase(C_Status))
-					{
-						System.out.println("PR-3364 Pass");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Reactivate Agreement - Reactivate Product List is Passed");
-					}
-					else
-					{
-						System.out.println("PR-3364 Failed");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Reactivate Agreement - Reactivate Product List is Failed");
-					}
-				}
-				catch(Exception e)
-				{
-					captureScreenShot.takeScreenShot("PR-3364",driver);
-					System.out.println("Test__PR-3364___%Failed");
-					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
-				}
-			}
-
-
-			@Test(description="Renewal - Activate Product List")
-			public void PR_3365() throws Exception
-			{
-				try
-				{
-					testLinkConnection.setsTestCase("PR-3365",this);
-					System.out.println("PR-3365 Started");
-					Thread.sleep(2000);
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
-					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
-					System.out.println("Contract Number is : "+ContractNumber);
-					Thread.sleep(2000);
-
-					oNavigate.toRenewal();
-					RenewalValidation =oRenewal.RenewalCustomer("",ContractNumber,"Y","","",contract_validity,"Save");
-					System.out.println("Success message is:"+RenewalValidation);
-					Thread.sleep(3000);
-
-					String Customer_id = "Select CUSTOMER_ID from Customer_tbl where customer_nbr='"+CustomerNumber+"' ";
-					this.records=oDBConnection.fecthRecords(Customer_id);
-					this.record=this.records.get(0);
-					String Party_id=record.get("CUSTOMER_ID");
-					System.out.println(" Party Id is " +Party_id);
-
-					String updateRenewalRequestasSysdate = "update PROVSION_PROCESS_REQUEST set EFFECTIVE_DATE=MQSSYSDATE where PARTY_ID='"+Party_id+"' and BIZ_PROCESS_ID=13";
-					this.record1=oDBConnection.updateRecords(updateRenewalRequestasSysdate);
-					System.out.println(" Renewal Request Is updated and commited succefully");
-					Thread.sleep(2000);
-					Thread.sleep(90000);
-					String Status = "select * from provsion_process_request where party_id= '"+Party_id+"' and BIZ_PROCESS_ID=13  order by 1 desc ";
-					this.records=oDBConnection.fecthRecords(Status);
-					this.record=this.records.get(0);
-					String Qstatus=record.get("STATUS");
-					System.out.println(Qstatus);
-					if(Qstatus.equalsIgnoreCase(C_Status))        	
-					{
-						System.out.println("PR-3365 Pass");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Renewal - Activate Product List is Passed");
-					}
-					else
-					{
-						System.out.println("PR-3365 Failed");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Renewal - Activate Product List is failed");
-					}
-				}
-				catch(Exception e)
-				{
-					captureScreenShot.takeScreenShot("PR-3365",driver);
-					System.out.println("Test__PR-3365___%Failed");
-					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
-				}
-			}
-
-
-			
-			@Test(description="Retrack - Retrack Product")
-			public void PR_3366() throws Exception
-			{
-				try
-				{
-					testLinkConnection.setsTestCase("PR-3366",this);
-					System.out.println("PR-3366 Started");
-					Thread.sleep(2000);
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
-					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
-					System.out.println("Contract Number is : "+ContractNumber);
-
-					Thread.sleep(80000);
-					oNavigate.toRetracking();
-					oRetracking.RetrackingScreen(CustomerNumber, "Service",1, "N", "Save");
-					Thread.sleep(70000);
-					String Customer_id = "Select CUSTOMER_ID from Customer_tbl where customer_nbr='"+CustomerNumber+"' ";
-					this.records=oDBConnection.fecthRecords(Customer_id);
-					this.record=this.records.get(0);
-					String Party_id=record.get("CUSTOMER_ID");
-					String Status = "select * from provsion_process_request where party_id= '"+Party_id+"' and BIZ_PROCESS_ID in (17,18)   order by 1 desc ";
-					this.records=oDBConnection.fecthRecords(Status);
-					this.record=this.records.get(0);
-					String Qstatus=record.get("STATUS");
-					System.out.println(Qstatus); 
-					if(Qstatus.equalsIgnoreCase(C_Status))
-					{
-						System.out.println("PR-3366 Pass");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Retrack - Retrack Product is Passed");
-					}
-					else
-					{
-						System.out.println("PR-3366 Failed");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Retrack - Retrack Product is Failed");
-					}
-				}
-				catch(Exception e)
-				{
-					captureScreenShot.takeScreenShot("PR-3366",driver);
-					System.out.println("Test__PR-3366___%Failed");
-					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
-				}
-			}
-
-			
-
-			@Test(description="Retrack with Initialize - Retrack Product List")    
-			public void PR_3367() throws Exception
-			{
-				try
-				{
-					testLinkConnection.setsTestCase("PR-3367",this);
-					System.out.println("PR-3367 Started");
-					Thread.sleep(2000);
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
-					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
-					System.out.println("Contract Number is : "+ContractNumber);
-
-					Thread.sleep(80000);
-					oNavigate.toRetracking();
-					oRetracking.RetrackingScreen(CustomerNumber, "UniqueId",1, "N", "Save");
-					Thread.sleep(80000);
-					String Customer_id = "Select CUSTOMER_ID from Customer_tbl where customer_nbr='"+CustomerNumber+"' ";
-					this.records=oDBConnection.fecthRecords(Customer_id);
-					this.record=this.records.get(0);
-					String Party_id=record.get("CUSTOMER_ID");
-					String Status = "select * from provsion_process_request where party_id= '"+Party_id+"' and BIZ_PROCESS_ID in (17,18)   order by 1 desc ";
-					this.records=oDBConnection.fecthRecords(Status);
-					this.record=this.records.get(0);
-					String Qstatus=record.get("STATUS");
-					System.out.println(Qstatus); 
-					if(Qstatus.equalsIgnoreCase(C_Status))
-					{
-						System.out.println("PR-3367 Pass");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Retrack with Initialize - Retrack Product List is Passed");
-					}
-					else
-					{
-						System.out.println("PR-3367 Failed");
-						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Retrack with Initialize - Retrack Product List is Failed");
-					}
-				}
-				catch(Exception e)
-				{
-					captureScreenShot.takeScreenShot("PR-3367",driver);
-					System.out.println("Test__PR-3367___%Failed");
+					captureScreenShot.takeScreenShot("PR-2676",driver);
+					System.out.println("Test__PR-2676___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
@@ -1688,70 +1394,67 @@ public class Prov_NAGRAVISION_Tc extends MQProvisioning
 
 
 			@Test(description="Reactivating Downgraded customer")
-			public void PR_4472() throws Exception
+			public void PR_4474() throws Exception
 			{
+
 				try
 				{
-					testLinkConnection.setsTestCase("PR-4472",this);
-					System.out.println("PR-4472 Started");
+					testLinkConnection.setsTestCase("PR-4474",this);
+					System.out.println("PR-4474 Started");
 					Thread.sleep(2000);
-
-					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Own", "", "",contract_validity,Prov_System_Name,"Y",billing_Frequency);
+					CustomerNumber=oBasicConfigurationsOfProvisioning.CustomerActvation("N", "Sale", "", "","",Plan_code,"Y",billing_Frequency);
 					ContractNumber = driver.findElement(locContractNumber).getAttribute("value");
 					System.out.println("Contract Number is : "+ContractNumber);
 
-					oNavigate.toCollection();
-					oCollections.collectionHeader(CustomerNumber, "","", "", "", "", "", "");
 					Thread.sleep(5000);
-					oCollections.collectionGrid("", "","Suspend Provisioning", "", "Save");
-					Thread.sleep(85000);
-					Thread.sleep(95000);
+					oNavigate.toHardwareReplacement();
+					oWaitTool.implicitWait(20);		        	  
+					oHardwareReplacement.HardwareReplacement_Header(CustomerNumber,"", "","",ReasonMRPL,"","","","","","","","","","","New");
+					Thread.sleep(5000);
+					oHardwareReplacement.HardwareReplacement_Item_Dtls(Item1,"",StatusMRPL,Item1,OperationalEntity,Location,OrderType,1);
+					Thread.sleep(2000);
+					driver.findElement(btnsave).click();
 
-					oNavigate.toCollection();
-					oCollections.collectionHeader(CustomerNumber, "","", "", "", "", "", "");
-					Thread.sleep(5000);
-					oCollections.collectionGrid("", "","Active", "", "Save");
 					Thread.sleep(70000);
-					Thread.sleep(75000);
-
 					String Customer_id = "Select CUSTOMER_ID from Customer_tbl where customer_nbr='"+CustomerNumber+"' ";
 					this.records=oDBConnection.fecthRecords(Customer_id);
 					this.record=this.records.get(0);
 					String Party_id=record.get("CUSTOMER_ID");
-					String Status = "select * from provsion_process_request where party_id= '"+Party_id+"' and BIZ_PROCESS_ID=6 order by 1 desc";
+					String Status = "select * from provsion_process_request where party_id= '"+Party_id+"' and BIZ_PROCESS_ID=3 order by 1 desc";
 					this.records=oDBConnection.fecthRecords(Status);
 					this.record=this.records.get(0);
 					String Qstatus=record.get("STATUS");
 					System.out.println(Qstatus); 
+
 					if(Qstatus.equalsIgnoreCase(C_Status))
 					{
-						System.out.println("PR-4472 Pass");
+						System.out.println("PR-4474 Pass");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_PASSED);
-						testLinkConnection.setsNotes("Reactivating Downgraded customer is Passed");
+						testLinkConnection.setsNotes("Reactivating Downgraded customero is Passed");
 					}
 					else
 					{
-						System.out.println("PR-4472 Failed");
+						System.out.println("PR-4474 Failed");
 						testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
-						testLinkConnection.setsNotes("Reactivating Downgraded customer is failed");
+						testLinkConnection.setsNotes("Reactivating Downgraded customer is Failed");
 					}
 				}
 				catch(Exception e)
 				{
-					captureScreenShot.takeScreenShot("PR-4472",driver);
-					System.out.println("Test__PR-4472___%Failed");
+					captureScreenShot.takeScreenShot("PR-4474",driver);
+					System.out.println("Test__PR-4474___%Failed");
 					testLinkConnection.setsResult(TestLinkAPIResults.TEST_FAILED);
 					testLinkConnection.setsNotes("Execution failed due to"+e.getMessage());
 				}
 			}
 
-
-			
 			// End of actvate all case's
 
 
-
 			// End of  Bussiness Processes For ABV
+
+
+
 
 
 }
